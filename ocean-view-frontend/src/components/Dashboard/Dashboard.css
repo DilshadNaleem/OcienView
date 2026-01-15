@@ -7,10 +7,10 @@
   --secondary-color: #3b82f6;
   --accent-color: #60a5fa;
   --background-light: #f8fafc;
-  --background-dark: #f8fafc;
+  --background-dark:#94c1ed;
   --text-primary: #1e293b;
   --text-secondary: #64748b;
-  --border-color: #e2e8f0;
+  --border-color: #9dbde7;
   --success-color: #10b981;
   --error-color: #ef4444;
   --warning-color: #f59e0b;
@@ -53,7 +53,7 @@
 
 .dashboard-container {
   padding: 2rem;
-  width: 100%;
+  width: 90%;
   max-width: 100%;
   min-height: 100vh;
   background-color: var(--background-light);
@@ -143,8 +143,8 @@
 }
 
 .card-icon {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 8.5rem;
+  height: 8.5rem;
   background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
   border-radius: var(--radius-md);
   display: flex;
@@ -152,7 +152,13 @@
   justify-content: center;
   margin-bottom: 1.25rem;
   color: white;
-  font-size: 1.5rem;
+  font-size: 3.5rem;
+}
+
+.dashboard-menu {
+  display: flex;
+  justify-content: center;
+  
 }
 
 .dashboard-card h3 {
@@ -160,6 +166,7 @@
   color: var(--text-primary);
   margin-bottom: 0.75rem;
   font-weight: 600;
+  align-items: center;
 }
 
 .dashboard-card p {

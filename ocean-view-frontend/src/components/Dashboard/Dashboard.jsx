@@ -33,40 +33,50 @@ function Dashboard() {
       {/* Main Dashboard Grid */}
       <div className="dashboard-grid">
         <div className="dashboard-card">
+          <a href="/editProfile">
+          <div className="dashboard-menu">
           <div className="card-icon">
             <FaUserEdit />
           </div>
+          </div>
           <h3>Edit Profile</h3>
           <p>Update your personal information and settings</p>
-          <a href="#" className="card-link">Go to Profile →</a>
+          <a href="/editProfile" className="card-link">Go to Profile →</a>
+          </a>
         </div>
         
-        <div className="dashboard-card">
+      
+       
+      <div className="dashboard-card">
+          <a href="/editProfile">
+          <div className="dashboard-menu">
           <div className="card-icon">
             <FaChartBar />
           </div>
-          <h3>Analytics</h3>
-          <p>View detailed reports and performance metrics</p>
-          <a href="#" className="card-link">View Analytics →</a>
+          </div>
+          <h3>Edit Profile</h3>
+          <p>Update your personal information and settings</p>
+          <a href="/editProfile" className="card-link">Go to Profile →</a>
+          </a>
         </div>
         
-        <div className="dashboard-card">
+        
+       <div className="dashboard-card">
+          <a href="/editProfile">
+          <div className="dashboard-menu">
           <div className="card-icon">
             <FaCalendarAlt />
           </div>
-          <h3>Calendar</h3>
-          <p>Manage your schedule and appointments</p>
-          <a href="#" className="card-link">Open Calendar →</a>
+          </div>
+          <h3>Edit Profile</h3>
+          <p>Update your personal information and settings</p>
+          <a href="/editProfile" className="card-link">Go to Profile →</a>
+          </a>
         </div>
         
-        <div className="dashboard-card">
-          <div className="card-icon">
-            <FaCog />
-          </div>
-          <h3>Settings</h3>
-          <p>Configure system preferences and options</p>
-          <a href="#" className="card-link">Settings →</a>
-        </div>
+        
+        
+        
       </div>
     </div>
   );

@@ -10,7 +10,7 @@
   --secondary-color: #3b82f6;
   --accent-color: #60a5fa;
   --background-light: #f8fafc;
-  --background-dark: #f8fafc;
+  --background-dark: #94c1ed;
   --text-primary: #1e293b;
   --text-secondary: #64748b;
   --border-color: #e2e8f0;
@@ -75,7 +75,7 @@
 
 /* Light Mode Navbar */
 :root:not(.dark-mode) .navbar {
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(180deg, #6c87d8 0%, #4d98e9 100%);
   border-right: 1px solid var(--border-color);
 }
 
@@ -158,12 +158,12 @@
 
 /* Light Mode Navigation Links */
 :root:not(.dark-mode) .nav-link {
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 :root:not(.dark-mode) .nav-link:hover {
   background: rgba(59, 130, 246, 0.1);
-  color: var(--primary-color);
+  color: var(--border-color);
 }
 
 :root:not(.dark-mode) .nav-link.active {
@@ -346,7 +346,7 @@
 }
 
 :root:not(.dark-mode) .nav-links::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 :root:not(.dark-mode) .nav-links::-webkit-scrollbar-thumb {
@@ -390,10 +390,10 @@
 /* App.css - Add global theme application */
 
 /* Apply theme to entire app */
-html, body, #root {
+ body, #root {
   margin: 0;
   padding: 0;
-  width: 100%;
+  width: 110%;
   height: 100%;
 }
 
@@ -421,11 +421,12 @@ body {
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
-  background-color: var(--background-dark, #f8fafc);
+  min-width: 100%;
+  background-color: var(--background-dark, #7fb3e7);
   transition: background-color 300ms ease;
 }
 
-/* Dark mode dashboard layout */
+
 :root.dark-mode .dashboard-layout {
   background-color: #0f172a;
 }

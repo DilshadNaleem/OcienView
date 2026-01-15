@@ -10,7 +10,7 @@ function App() {
     <ThemeProvider>
       <BrowserRouter>
       <Routes>
-        <Route path='/' element={Dashboard}></Route>
+        <Route path='/' element={<Dashboard />}></Route>
 
 
         <Route path="/*" element={<DashboardLayout />}></Route>
@@ -26,7 +26,7 @@ function App() {
         <Navbar></Navbar>
         <main className="main-context">
           <Routes>
-            <Route path="/dashboard" element= {Dashboard}></Route>
+            <Route path="/dashboard" element= {<Dashboard/>}></Route>
           </Routes>
         </main>
       </div>
