@@ -433,11 +433,12 @@ body {
 
 .main-context {
   flex: 1;
-  margin-left: 250px;
+  margin-left: 150px;
   padding: 20px;
   min-height: 100vh;
   background-color: var(--background-dark, #f8fafc);
   transition: background-color 300ms ease, margin-left 300ms ease;
+  
 }
 
 /* Dark mode main content */

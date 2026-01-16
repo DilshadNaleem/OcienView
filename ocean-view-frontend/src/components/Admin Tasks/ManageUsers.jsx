@@ -10,6 +10,8 @@ function ManageUsers()
 
             <div className="table-container">
                 <div className="users-table">
+
+                   
                     <thead  className="table-head">
                         <tr>
                             <th>ID</th>
@@ -41,6 +43,7 @@ function ManageUsers()
                             </td>
                         </tr>
                     </tbody>
+                    
                 </div>
             </div>
         </div>

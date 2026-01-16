@@ -50,10 +50,124 @@
 }
 
 .table-head{
-    color:red;
-    background-color: black;
+    padding: 10px;
+    columns: 10px;
+    row-gap: 10px;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
-.table-body{
-    background-color: red;
+.table-head th {
+  padding: 10px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  border-bottom: 2px solid var(--border-color);
+  min-width: 20px;
+  position: relative;
+  background-color: var(--accent-color);
+  border-radius: 1px;
+  color: var(--text-primary);
+  border-bottom: 3px solid var(--border-color);
 }
+
+
+.table-body td {
+  padding: 18px 16px;
+  text-align: left;
+  font-size: 15px;
+  color: var(--theme-toggle-text);
+  border-bottom: 2px solid var(--border-color);
+  vertical-align: middle;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.delete-btn {
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: var(--radius-md);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 1200px) {
+  .table-container {
+    padding: 0 15px;
+  }
+  
+  .users-table {
+    font-size: 14px;
+  }
+  
+  .table-head th,
+  .table-body td {
+    padding: 14px 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 28px;
+  }
+  
+  .table-head th,
+  .table-body td {
+    padding: 12px 8px;
+    font-size: 13px;
+  }
+  
+  .delete-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  font-weight: 100px;
+  color: var(--text-primary);
+  font-family: 'Poppins';
+  margin: 10px;
+  margin-bottom: 20px;
+}
+
+
+.users-table{
+  width: 100%;
+}
+
+.table-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 40px
+}
+
+.table-head th:nth-child(1) { width: 60px; } /* ID */
+.table-head th:nth-child(2) { width: 80px; } /* Profile */
+.table-head th:nth-child(3) { width: 180px; } /* Full Name */
+.table-head th:nth-child(4) { width: 140px; } /* NIC */
+.table-head th:nth-child(5) { width: 220px; } /* Email */
+.table-head th:nth-child(6) { width: 150px; } /* Contact */
+.table-head th:nth-child(7) { width: 100px; } /* Status */
+.table-head th:nth-child(8) { width: 150px; } /* Total Calculations */
+.table-head th:nth-child(9) { width: 170px; } /* Actions */
