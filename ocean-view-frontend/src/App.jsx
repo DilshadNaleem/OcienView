@@ -2,8 +2,10 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Dashboard from './components/Dashboard/Dashboard';
 import Navbar from './components/Navbar/Navbar';
 import { ThemeProvider } from './components/ThemeContext';
+import AdminEditProfile from './components/Admin Tasks/AdminEditProfile';
 import './App.css';
 import { BsExposure } from 'react-icons/bs';
+import ManageUsers from './components/Admin Tasks/ManageUsers';
 
 function App() {
   return (
@@ -11,7 +13,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<Dashboard />}></Route>
-
+        <Route path='/manage' element={<ManageUsers/>}></Route>
 
         <Route path="/*" element={<DashboardLayout />}></Route>
         <Route path="/navbar" element={<Navbar />} />
@@ -20,6 +22,8 @@ function App() {
     </ThemeProvider>
   );
 }
+
+
   function DashboardLayout() {
     return (
       <div className="dashboard-layout">
@@ -27,6 +31,8 @@ function App() {
         <main className="main-context">
           <Routes>
             <Route path="/dashboard" element= {<Dashboard/>}></Route>
+            <Route path='/users' element= {<ManageUsers/>}></Route>
+            <Route path='/EditProfile' element= {<AdminEditProfile/>}></Route>
           </Routes>
         </main>
       </div>

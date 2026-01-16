@@ -9,7 +9,12 @@ import {
   FaShoppingCart, 
   FaCog,
   FaSun,
-  FaMoon 
+  FaMoon, 
+  FaTaxi,
+  FaMoneyBill,
+  FaPersonBooth,
+  FaMale,
+  FaUserEdit
 } from 'react-icons/fa';
 
 // Import useTheme hook
@@ -35,13 +40,17 @@ function Navbar() {
           <FaTachometerAlt className="nav-icon" />
           <span>Dashboard</span>
         </a>
+         <a href="/editProfile" className="nav-link">
+          <FaUserEdit className="nav-icon" />
+          <span>Edit Profile</span>
+        </a>
         <a href="/users" className="nav-link">
           <FaUsers className="nav-icon" />
           <span>Users</span>
         </a>
         <a href="/products" className="nav-link">
-          <FaBox className="nav-icon" />
-          <span>Products</span>
+          <FaMoneyBill className="nav-icon" />
+          <span>Reservations</span>
         </a>
         <a href="#" className="nav-link">
           <FaShoppingCart className="nav-icon" />
