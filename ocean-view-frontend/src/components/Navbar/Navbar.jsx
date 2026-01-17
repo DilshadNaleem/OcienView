@@ -48,7 +48,7 @@ function Navbar() {
           <FaUsers className="nav-icon" />
           <span>Users</span>
         </a>
-        <a href="/products" className="nav-link">
+        <a href="/reservations" className="nav-link">
           <FaMoneyBill className="nav-icon" />
           <span>Reservations</span>
         </a>

@@ -6,6 +6,7 @@ import AdminEditProfile from './components/Admin Tasks/AdminEditProfile';
 import './App.css';
 import { BsExposure } from 'react-icons/bs';
 import ManageUsers from './components/Admin Tasks/ManageUsers';
+import Reservations from './components/Admin Tasks/Reservations';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/dashboard" element= {<Dashboard/>}></Route>
             <Route path='/users' element= {<ManageUsers/>}></Route>
             <Route path='/EditProfile' element= {<AdminEditProfile/>}></Route>
+            <Route path='/reservations' element= {<Reservations/>}></Route>
           </Routes>
         </main>
       </div>
