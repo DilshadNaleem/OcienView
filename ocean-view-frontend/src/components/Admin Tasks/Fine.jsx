@@ -1,7 +1,7 @@
 import { FaSearch } from 'react-icons/fa';
 import './ManageUsers.css';
 
-function ManageUsers() 
+function Fine() 
 {
     return(
         <div className="table-content">
@@ -61,4 +61,4 @@ function ManageUsers()
 
 }
 
-export default ManageUsers;
+export default Fine;

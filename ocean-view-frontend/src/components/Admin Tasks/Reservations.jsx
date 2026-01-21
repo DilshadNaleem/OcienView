@@ -1,4 +1,5 @@
-import './ManageUsers.css';
+import { FaSearch } from 'react-icons/fa';
+
 
 function Reservations() 
 {
@@ -11,19 +12,26 @@ function Reservations()
             <div className="table-container">
                 <div className="users-table">
 
-                   
+                   <div className="search-container">
+                    <div className="search-bar">
+                        <input type="text" name="search" id="search"
+                        placeholder='Search' className='search'/>
+                         <FaSearch className='search-icon'/>
+                    </div>
+                   </div>
+
                     <thead  className="table-head">
                         <tr>
                             <th>ID</th>
                             <th>Profile</th>
                             <th>Full Name</th>
                             <th>Customer Email</th>
-                            <th>Contact</th>
+                            
                             <th>Date Borrowed</th>
                             <th>Date Handovering</th>
                             <th>Fine</th>
                             <th>Total Payable</th>
-                            <th>Total Paid</th>
+                            
                             <th>Payment Id</th>
                             <th>Payment Method</th>
                             <th>Status</th>
@@ -37,14 +45,13 @@ function Reservations()
                             <td>2</td>
                             <td>John doe</td>
                             <td>Email</td>
-                            <td>Contact</td>
                             <td>Date borrowed</td>
                             <td>Date handovering</td>
                             <td>Fine</td>
                             <td>Total Payable</td>
-                            <th>Rs. Paid</th>
-                            <th>Payment ID</th>
-                            <th>payment method</th>
+                           
+                            <td>Payment ID</td>
+                            <td>payment method</td>
                             <td>Status</td>
                             
                             <td>

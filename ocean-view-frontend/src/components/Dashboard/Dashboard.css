@@ -54,10 +54,9 @@
 .dashboard-container {
   padding: 2rem;
   width: 90%;
-  max-width: 100%;
   min-height: 100vh;
-  background-color: var(--background-light);
   transition: background-color var(--transition-normal);
+  
 }
 
 /* Dark mode for entire container */
