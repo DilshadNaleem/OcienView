@@ -163,3 +163,29 @@
     font-size: 1.5rem;
   }
 }
+
+.error-message {
+    color: #ffffff;
+    font-size: 16px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    text-align: left;
+    width: 100%;
+}
+
+.input-group {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.input.error {
+    border: 1px solid #ff0000;
+    border-radius: 4px;
+}
+
+.input.error:focus {
+    outline: none;
+    border-color: #ff0000;
+    box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2);
+}
+

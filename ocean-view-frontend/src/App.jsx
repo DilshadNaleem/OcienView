@@ -9,6 +9,8 @@ import ManageUsers from './components/Admin Tasks/ManageUsers';
 import Reservations from './components/Admin Tasks/Reservations';
 import Fine from './components/Admin Tasks/Fine';
 import Login from './components/Admin Tasks/LoginCredentials/Login';
+import RecoverPassword from './components/Admin Tasks/LoginCredentials/RecoverPassword';
+import ResetPassword from './components/Admin Tasks/LoginCredentials/ResetPassword';
 
 function App() {
   return (
@@ -21,7 +23,9 @@ function App() {
         <Route path="/*" element={<DashboardLayout />}></Route>
         <Route path="/navbar" element={<Navbar />} />
         <Route path='/Admin_Register' element={<Register/>}></Route>
-        <Route path='Admin_Login' element={<Login/>}></Route>
+        <Route path='/Admin_Login' element={<Login/>}></Route>
+        <Route path='/Admin_ResetPassword' element={<RecoverPassword/>}></Route>
+        <Route path='/Admin_RecoverPassword' element={<ResetPassword/>}></Route>
       </Routes>
       </BrowserRouter>
     </ThemeProvider>
