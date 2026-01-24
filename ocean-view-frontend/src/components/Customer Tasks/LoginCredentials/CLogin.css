@@ -1,0 +1,147 @@
+/* Existing styles remain, add these new styles: */
+
+/* Transition for the container */
+.register {
+  transition: all 0.4s ease-in-out;
+}
+
+/* Slide transition effect */
+.register.login-mode {
+  transform: translateX(0);
+}
+
+.register.register-mode {
+  transform: translateX(0);
+}
+
+/* Smooth height transition for form */
+.form-container {
+  overflow: hidden;
+}
+
+.form-body {
+  transition: height 0.4s ease-in-out;
+}
+
+
+
+/* Button styling */
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.auth-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.auth-btn:active {
+  transform: translateY(0);
+}
+
+/* Toggle mode button */
+.toggle-mode-btn {
+  background: none;
+  border: none;
+  color: #667eea;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 10px 0;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.toggle-mode-btn:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+
+
+.reset-link {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.reset-link:hover {
+  color: #667eea;
+  text-decoration: underline;
+}
+
+
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 18px;
+  
+}
+
+/* Error message styling */
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+  padding-left: 5px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Error input styling */
+.input.error {
+  border-color: #e74c3c;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+
+
+.register-hyperlink:hover {
+  color: #667eea;
+  transform: translateY(-3px);
+}
+
+/* Heading styling */
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+
+/* Form container styling */

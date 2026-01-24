@@ -17,6 +17,10 @@ import {
   FaUserEdit,
   FaJediOrder,
   FaFirstOrder,
+  FaHistory,
+  FaAd,
+  FaLifeRing,
+  FaLongArrowAltUp,
   FaLongArrowAltDown
 } from 'react-icons/fa';
 
@@ -24,7 +28,7 @@ import {
 import { useTheme } from "../ThemeContext.jsx";
 import { useLocation } from "react-router-dom";
 
-function Navbar() {
+function CustomerNavbar() {
   // Use theme context
   const { darkMode, toggleTheme } = useTheme();
   const location = useLocation();
@@ -43,62 +47,64 @@ function Navbar() {
       <div className="admin-panel">
         <div className="admin-img">
           <img src={pImage} alt="Admin" />
-          <div className="admin-name">Admin Name</div>
+          <div className="admin-name">Customer Name</div>
         </div>
       </div>
 
       {/* Navigation Links */}
       <div className="nav-links">
         <a 
-          href="/dashboard" 
-          className={`nav-link ${isActive("/dashboard") ? "active" : ""}`}
+          href="/Customer/Dashboard" 
+          className={`nav-link ${isActive("/Customer/Dashboard") ? "active" : ""}`}
         >
           <FaTachometerAlt className="nav-icon" />
           <span>Dashboard</span>
         </a>
         <a 
-          href="/editProfile" 
-          className={`nav-link ${isActive("/editProfile") ? "active" : ""}`}
+          href="/Customer/editProfile" 
+          className={`nav-link ${isActive("/Customer/editProfile") ? "active" : ""}`}
         >
           <FaUserEdit className="nav-icon" />
           <span>Edit Profile</span>
         </a>
         <a 
-          href="/users" 
-          className={`nav-link ${isActive("/users") ? "active" : ""}`}
+          href="/Customer/history" 
+          className={`nav-link ${isActive("/Customer/history") ? "active" : ""}`}
         >
-          <FaUsers className="nav-icon" />
-          <span>Users</span>
+          <FaHistory className="nav-icon" />
+          <span>History</span>
         </a>
         <a 
-          href="/reservations" 
-          className={`nav-link ${isActive("/reservations") ? "active" : ""}`}
+          href="/Customer/reservations" 
+          className={`nav-link ${isActive("/Customer/reservations") ? "active" : ""}`}
         >
           <FaFirstOrder className="nav-icon" />
           <span>Reservations</span>
         </a>
         <a 
-          href="/fine" 
-          className={`nav-link ${isActive("/fine") ? "active" : ""}`}
+          href="/Customer/helpSection" 
+          className={`nav-link ${isActive("/Customer/helpSection") ? "active" : ""}`}
         >
-          <FaMoneyBill className="nav-icon" />
-          <span>Orders</span>
+          <FaLifeRing className="nav-icon" />
+          <span>Help</span>
         </a>
+
         <a 
-          href="/settings" 
-          className={`nav-link ${isActive("/settings") ? "active" : ""}`}
+          href="/Customer/settings" 
+          className={`nav-link ${isActive("/Customer/settings") ? "active" : ""}`}
         >
           <FaCog className="nav-icon" />
           <span>Settings</span>
         </a>
-        
+
          <a 
-            href="/logout" 
-            className={`nav-link ${isActive("/logout") ? "active" : ""}`}
+          href="/Customer/logout" 
+          className={`nav-link ${isActive("/Customer/logout") ? "active" : ""}`}
         >
-            <FaLongArrowAltDown className="nav-icon" />
-            <span>Logout</span>
-          </a>
+          <FaLongArrowAltDown className="nav-icon" />
+          <span>Logout</span>
+        </a>
+
       </div>
 
       {/* Theme Toggle Button */}
@@ -125,4 +131,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default CustomerNavbar;

@@ -40,6 +40,7 @@
 :root.dark-mode {
   --primary-color: #2563eb;
   --primary-dark: #1d4ed8;
+  --secondary-color: #8cced6;
   --background-dark: #0f172a;
   --text-primary: #f1f5f9;
   --text-secondary: #cbd5e1;
@@ -56,8 +57,8 @@
 
 .main-register {
   padding: 7rem 0px;
-  
 }
+
 
 .register {
   background-color: #0f172a;
@@ -68,6 +69,10 @@
   max-width: 500px; /* Added for better layout */
   margin: 0 auto; /* Center the register box */
   padding: 2rem; 
+}
+
+:root.dark-mode .register {
+  background-color: var(--secondary-color);
 }
 
 .register-hyperlink{
@@ -87,6 +92,10 @@
   justify-content: center;
   margin-bottom: 1rem;
   font-size: 2rem;
+}
+
+:root.dark-mode .heading h3{
+  color: black;
 }
 
 .form-container {
@@ -143,6 +152,14 @@
   max-width: 400px;
 }
 
+:root.dark-mode .click-btn {
+  background-color: var(--accent-color);
+}
+
+:root.dark-mode .click-btn:hover {
+  background-color: var(--background-dark);
+}
+
 .click-btn:hover {
   background-color: var(--primary-dark);
 }
@@ -189,3 +206,82 @@
     box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2);
 }
 
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: var(--radius-md);
+    
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 40px; /* Make space for the eye icon */
+    box-sizing: border-box;
+    max-width: 430px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.password-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.eye-icon {
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+/* If you want to use Font Awesome icons instead of emojis */
+.password-toggle i {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Style adjustments for error state */
+.password-input-wrapper input.error {
+    border-color: #ff3860;
+    padding-right: 40px; /* Maintain space for eye icon even in error state */
+}
+
+.input-group-img {
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    img {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--border-color);
+    }
+}
+
+.change-photo {
+  color: white;
+
+}
+
+.camera-icon {
+  color: white;
+  font-size: 1.5rem;
+  margin-right: 8px;
+}

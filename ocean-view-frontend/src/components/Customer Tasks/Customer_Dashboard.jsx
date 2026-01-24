@@ -1,8 +1,8 @@
 // Dashboard.jsx
-import "./Dashboard.css";
+
 import { FaUsers, FaUserEdit, FaChartBar, FaCalendarAlt, FaCog } from 'react-icons/fa';
 
-function Dashboard() {
+function Customer_Dashboard() {
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
@@ -92,4 +92,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Customer_Dashboard;

@@ -19,6 +19,10 @@ function Login()
         password: false
     });
 
+    const [showPassword, setShowPassword] = useState({
+        password: false
+    });
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const validateField = (name, value) => {
@@ -60,6 +64,13 @@ function Login()
                 }
             ));
         }
+    }
+
+    const togglePasswordVisibility = (field) => {
+        setShowPassword(prev => ({
+            ...prev,
+            [field]: !prev[field]
+        }));
     }
 
         const handleBlur = (e) => {
@@ -107,6 +118,10 @@ function Login()
 
                 setTouched({
                     email: false,
+                    password: false
+                });
+
+                setShowPassword({
                     password: false
                 });
             }
@@ -158,15 +173,31 @@ function Login()
                         </div>
                         
                         <div className="input-group">
+                            <div className="password-input-wrapper">
                              <input 
-                             type="password"
+                             type={showPassword.password ? 'text' : 'password'}
                              name="password"  
                              placeholder='Enter Password' 
                              className={`input ${touched.password && errors.password ? 'error' : ''}`}
                              value={formData.password}
                              onChange={handleChange}
                              onBlur={handleBlur}
+                             
                              /> 
+
+                             <button
+                             type="button"
+                             className="password-toggle"
+                             onClick={() => togglePasswordVisibility('password')}
+                             tabIndex="-1"
+                             >
+                                {showPassword.password ? (
+                                    <span className="eye-icon">🙈</span>
+                                ) : (
+                                    <span className="eye-icon">👁️‍🗨️</span>
+                                )}
+                             </button>
+                             </div>
                              {
                                 touched.password && errors.password && (
                                     <div className="error-message">{errors.password}</div>
@@ -179,7 +210,7 @@ function Login()
                            <button className='click-btn'>Register</button>
    
                            <a href="/Admin_Register">Create New Account</a>
-                           <a href="/Admin_ResetPassword">Reset Password</a>
+                           <a href="/Admin_ResetPassword" className="reset-link">Reset Password</a>
    
                        </form>
                    </div>

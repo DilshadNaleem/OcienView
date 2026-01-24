@@ -37,6 +37,11 @@ function Register()
         confirmPassword: false
       });
 
+      const [showPassword, setShowPassword] = useState({
+        password: false,
+        confirmPassword: false
+      });
+
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const nicRegex = /^(?:\d{9}[VXvx]|\d{12})$/;
       const contactNumberRegex = /^(?:\+94|0)7[0-9]{8}$/;
@@ -116,6 +121,13 @@ function Register()
         }));
       };
 
+      const togglePasswordVisibility = (field) => {
+        setShowPassword(prev => ({
+            ...prev,
+            [field]: !prev[field]
+        }));
+      };
+
       const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -154,6 +166,11 @@ function Register()
         email: false,
         nic: false,
         contactNumber: false,
+        password: false,
+        confirmPassword: false
+      });
+
+      setShowPassword({
         password: false,
         confirmPassword: false
       });
@@ -264,30 +281,63 @@ return(
                         </div>
                         
                         <div className="input-group">
+
+                             <div className="password-input-wrapper">
                             <input 
-                                type="password" 
+                                type={showPassword.password ? 'text' : 'password'} 
                                 name="password"
                                 placeholder='Enter Password' 
                                 className={`input ${touched.password && errors.password ? 'error' : ''}`}
                                 value={formData.password}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                autoComplete="new-password"
                             />
+
+                            <button
+                            type="button"
+                            className="password-toggle"
+                            onClick={() => togglePasswordVisibility('password')}
+                            tabIndex={"-1"} >
+                              {showPassword.password ? (
+                                            <span className="eye-icon">🙈</span>
+                                        ) : (
+                                            <span className="eye-icon">👁️‍🗨️</span>
+                                        )}
+                            </button>
+</div>
                             {touched.password && errors.password && (
                                 <div className="error-message">{errors.password}</div>
                             )}
                         </div>
                         
                         <div className="input-group">
+                          <div className="password-input-wrapper">
                             <input 
-                                type="password" 
+                                type={showPassword.confirmPassword ? 'text' : 'password'} 
                                 name="confirmPassword"
                                 placeholder='Enter Confirm Password' 
                                 className={`input ${touched.confirmPassword && errors.confirmPassword ? 'error' : ''}`}
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                autoComplete="new-password"
                             />
+
+                            <button
+                            type="button"
+                            className="password-toggle"
+                            onClick={() => togglePasswordVisibility('confirmPassword')}
+                            >
+                              {showPassword.confirmPassword ? (
+                                            <span className="eye-icon">🙈</span>
+                                        ) : (
+                                            <span className="eye-icon">👁️‍🗨️</span>
+                                        )}
+                            </button>
+                            </div>
+
+
                             {touched.confirmPassword && errors.confirmPassword && (
                                 <div className="error-message">{errors.confirmPassword}</div>
                             )}
