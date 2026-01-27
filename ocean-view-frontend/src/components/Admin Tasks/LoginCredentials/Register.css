@@ -276,12 +276,12 @@
 }
 
 .change-photo {
-  color: white;
-
+  color: black;
+  font-weight: bold;
 }
 
 .camera-icon {
-  color: white;
+  color: black;
   font-size: 1.5rem;
   margin-right: 8px;
 }

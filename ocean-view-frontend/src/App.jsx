@@ -15,7 +15,7 @@ import OtpVerification from './components/Admin Tasks/LoginCredentials/OtpVerifi
 import CLogin from './components/Customer Tasks/LoginCredentials/CLogin';
 import Customer_Dashboard from './components/Customer Tasks/Customer_Dashboard';
 import CustomerNavbar from './components/Navbar/CustomerNavbar';
-import CEditProfile from './components/Customer Tasks/CustomerEditProfile';
+import CustomerEditProfile from './components/Customer Tasks/EditProfileCustomer';
 import CustomerHistory from './components/Customer Tasks/CustomerHistory';
 import CustomerReservations from './components/Customer Tasks/CustomerReservations';
 import HelpSection from './components/Customer Tasks/helpSection';
@@ -38,6 +38,7 @@ function App() {
         <Route path='/OtpVerification' element={<OtpVerification/>}></Route>
         <Route path='/Customer_Login' element={<CLogin/>}></Route>
         <Route path='/Customer/*' element={<CustomerDashboardLayout/>}></Route>
+         <Route path='/CustomerHistory1' element={<CustomerHistory/>}></Route>
       </Routes>
       </BrowserRouter>
     </ThemeProvider>
@@ -57,6 +58,8 @@ function App() {
             <Route path='/reservations' element= {<Reservations/>}></Route>
             <Route path='/fine' element={<Fine/>}></Route>
             <Route path='/settings' element={<Set/>}></Route>
+            
+            
           </Routes>
         </main>
       </div>
@@ -71,8 +74,8 @@ function App() {
         <main className="main-context">
           <Routes>
             <Route path='/Dashboard' element={<Customer_Dashboard/>}></Route>
-            <Route path='/editProfile' element={<CEditProfile/>}></Route>
-            <Route path='/CustomerHistory' element={<CustomerHistory/>}></Route>
+            <Route path='/editProfile' element={<CustomerEditProfile/>}></Route>
+            <Route path='/history' element={<CustomerHistory/>}></Route>
             <Route path='/reservations' element={<CustomerReservations/>}></Route>
             <Route path='/helpSection' element={<HelpSection/>}></Route>
             <Route path='/settings' element={<Set/>}></Route>

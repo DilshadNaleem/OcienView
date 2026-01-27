@@ -23,7 +23,22 @@ function AdminEditProfile()
     };
 
     const handleSubmit = (e) => {
-        console.log("Profile Updated" , selectedImage);
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const formObject = Object.fromEntries(formData.entries());
+
+
+        if(selectedImage) {
+            formObject.profileImage = selectedImage;
+        }
+
+        console.log("Form Data Submitted: ", formObject);
+        console.log("Profile Image File: ", selectedImage);
+
+         if (selectedImage) {
+        URL.revokeObjectURL(profileImage);
+    }
     };
 
     return(
@@ -60,7 +75,7 @@ function AdminEditProfile()
 
                             </div>
                         </div>
-                     <div className="input-group">
+                        <div className="input-group">
                             <input 
                                 type="text" 
                                 name="firstName"
