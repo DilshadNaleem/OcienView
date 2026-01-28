@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300,400,500,600,700&display=swap');
+
+:root {
+    --light-blue-1: rgb(214, 235, 239);
+    --light-blue-2: rgb(232, 244, 246);
+    --medium-blue: rgb(106, 160, 171);
+    --darker-blue: rgb(90, 130, 140);
+    --shine-overlay: rgba(255, 255, 255, 0.2);
+    --font-color: #1e4d50;
+    --dark-bg: rgb(45, 45, 45);
+    --dark-text: #eee;
+    --button-color: #0073bb;
+    --button-hover-color: #5196c1;
+    --border-radius: 5px;
+    --gradient: linear-gradient(135deg, var(--light-blue-1), var(--medium-blue), var(--darker-blue));
+    --button-gradient: linear-gradient(135deg, var(--button-color), var(--button-hover-color));
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: var(--gradient); /* Updated gradient background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110vh;
+    margin: 0;
+    animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+}
+
+.container {
+    background: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    position: relative;
+    width: 768px;
+    max-width: 100%;
+    min-height: 550px;
+    overflow: hidden;
+    animation: slideUp 1s ease-in-out; /* Slide-up animation */
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.sign-in-container {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+}
+
+.sign-up-container {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out, border-radius 0.4s ease-in-out;
+    border-radius: 150px 0 0 100px;
+    z-index: 100;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15); /* Added shadow for depth */
+}
+
+.container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+    border-radius: 0 150px 100px 0;
+}
+
+.overlay {
+    background: var(--gradient);
+    color: var(--font-color);
+    position: absolute;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.1); /* Inset shadow for texture */
+}
+
+.container.right-panel-active .overlay {
+    transform: translateX(50%);
+}
+
+.overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 20px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left {
+    transform: translateX(-20%);
+    transition: transform 0.8s ease-in-out;
+}
+
+.container.right-panel-active .overlay-left {
+    transform: translateX(0);
+}
+
+.overlay-right {
+    right: 0;
+    transform: translateX(0);
+    transition: transform 0.8s ease-in-out;
+}
+
+.container.right-panel-active .overlay-right {
+    transform: translateX(20%);
+}
+
+.social-container a {
+    border: 1px solid var(--light-blue-1);
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    height: 40px;
+    width: 40px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Hover shadow */
+}
+
+.social-container a:hover {
+    background-color: var(--light-blue-1);
+    border-color: var(--light-blue-1);
+    transform: scale(1.2); /* Scale effect */
+}
+
+footer {
+    background-color: var(--medium-blue);
+    color: var(--dark-text);
+    font-size: 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 15px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+footer a {
+    color: var(--light-blue-2);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--button-hover-color);
+}
+
+form {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+form h1 {
+    font-weight: bold;
+    margin: 0;
+    color: var(--font-color);
+    animation: bounceIn 1s ease-in-out; /* Bounce-in for heading */
+}
+
+
+form input, form select {
+    background: var(--light-blue-2);
+    border: 1px solid var(--darker-blue);
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus, form select:focus {
+    border-color: var(--button-color);
+    box-shadow: 0 0 10px var(--button-color); /* Focus glow effect */
+}
+
+form button {
+    border-radius: var(--border-radius);
+    border: none;
+    background: var(--button-gradient); /* Updated to gradient */
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 15px 40px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    animation: bounceIn 1.2s ease;
+}
+
+form button:hover {
+    transform: translateY(-3px); /* Button lift effect on hover */
+    background: var(--button-hover-color);
+}
+
+form a {
+    color: var(--button-color);
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+
+form a:hover {
+    color: var(--button-hover-color);
+}
+
+button.ghost {
+    background-color: transparent;
+    border: 2px solid var(--button-color);
+    color: var(--button-color);
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px 40px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    animation: bounceIn 1.2s ease;
+}
+
+button.ghost:hover {
+    background-color: var(--button-color);
+    color: #fff;
+    transform: scale(1.1); /* Button hover scaling */
+}

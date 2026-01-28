@@ -12,7 +12,7 @@ public class CusUniqueID
     {
         String uniqueId = "CUS_01";
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String query = "SELECT unique_id FROM customers DESC LIMIT 1";
+            String query = "SELECT unique_id FROM customers ORDER BY id DESC LIMIT 1";
             try (PreparedStatement ps = conn.prepareStatement(query);
                  ResultSet rs = ps.executeQuery()) {
                 if (rs.next())

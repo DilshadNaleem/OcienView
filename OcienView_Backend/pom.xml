@@ -31,6 +31,38 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- JSP Support (Tomcat Jasper) -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>10.1.36</version> <!-- Ensure this version matches your Tomcat version -->
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>10.1.36</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.angus</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.3</version>
+        </dependency>
+
+
+
+
+
     </dependencies>
+
 
 </project>

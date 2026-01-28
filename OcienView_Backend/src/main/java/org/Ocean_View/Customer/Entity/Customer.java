@@ -1,26 +1,40 @@
-package org.Ocean_View.Customer.DTO;
+package org.Ocean_View.Customer.Entity;
 
 import java.time.LocalDateTime;
 
-public class RegisterRequest {
+public class Customer
+{
+    private String unique_id;
     private String firstName;
     private String lastName;
-    private String email;
-    private String password;
     private String nic;
+    private String  email;
+    private String password;
+    private String image_path;
     private String contactNumber;
-    private String image_url;
-    private String status;
     private LocalDateTime created_at;
+    private String status;
 
-    public RegisterRequest(String firstName, String lastName, String email, String password, String nic, String contactNumber) {
+
+    public Customer(String unique_id, String firstName, String lastName, String nic, String email, String password, String image_path, String contactNumber, LocalDateTime created_at, String status) {
+        this.unique_id = unique_id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.nic = nic;
         this.email = email;
         this.password = password;
-        this.nic = nic;
+        this.image_path = image_path;
         this.contactNumber = contactNumber;
+        this.created_at = created_at;
+        this.status = status;
+    }
 
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 
     public String getFirstName() {
@@ -39,6 +53,14 @@ public class RegisterRequest {
         this.lastName = lastName;
     }
 
+    public String getNic() {
+        return nic;
+    }
+
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -55,12 +77,12 @@ public class RegisterRequest {
         this.password = password;
     }
 
-    public String getNic() {
-        return nic;
+    public String getImage_path() {
+        return image_path;
     }
 
-    public void setNic(String nic) {
-        this.nic = nic;
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
     }
 
     public String getContactNumber() {
@@ -71,12 +93,12 @@ public class RegisterRequest {
         this.contactNumber = contactNumber;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public LocalDateTime getCreated_at() {
+        return created_at;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
     }
 
     public String getStatus() {
@@ -86,15 +108,4 @@ public class RegisterRequest {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    public LocalDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
-    }
 }
-
-
-

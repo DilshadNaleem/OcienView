@@ -7,8 +7,6 @@ import org.Ocean_View.Customer.DTO.RegisterRequest;
 
 public interface CustomerAuthService
 {
-    String registerCustomer(RegisterRequest request, HttpSession session);
-    String verifyOtp(String otp, HttpSession session);
-    void updatePassword(String email, String newPassword);
+    String verifyOtp (String otp, HttpSession session);
 
 }
