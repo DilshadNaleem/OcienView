@@ -3,23 +3,44 @@ package org.Ocean_View.Customer.Services.Implementations;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
+import org.Ocean_View.Connection.DatabaseConnection;
 import org.Ocean_View.Customer.Services.Interfaces.EmailService;
+import org.Ocean_View.Customer.Services.Interfaces.OTPService;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class EmailServiceImpl implements EmailService {
     private final String fromEmail = "hypermarket403@gmail.com";
     private final String emailPassword = "jaeh itgd annt fsqr";
-    private jakarta.mail.Session session; // Use jakarta.mail.Session
+    private jakarta.mail.Session session;
+    private OTPService otpService;
+    private DatabaseConnection databaseConnection;
+
+    // ThreadLocal to store session for current thread
+    private static final ThreadLocal<HttpSession> currentSession = new ThreadLocal<>();
 
     public EmailServiceImpl() {
         initializeSession();
+        this.otpService = new OTPServiceImpl();
+        this.databaseConnection = new DatabaseConnection();
+    }
+
+    // Method to set session before sending email
+    public void setCurrentSession(HttpSession session) {
+        currentSession.set(session);
+    }
+
+    // Method to clear session after use
+    public void clearCurrentSession() {
+        currentSession.remove();
     }
 
     private void initializeSession() {
         Properties props = new Properties();
-
-        // SMTP Configuration
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
@@ -33,18 +54,18 @@ public class EmailServiceImpl implements EmailService {
                 }
             });
 
-            // Enable debug mode
-            session.setDebug(true);
-
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException("Failed to initialize email session", e);
         }
     }
 
     @Override
-    public void sendVerificationEmail(String firstName, String lastName, String toEmail, String otp) {
+    public void sendVerificationEmail(String firstName, String lastName, String toEmail, String otp, HttpSession httpsession) {
         try {
+            HttpSession httpSession = httpsession;
+
+
+            // Send email
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail, "Ocean View"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
@@ -66,14 +87,36 @@ public class EmailServiceImpl implements EmailService {
 
             message.setContent(content, "text/html");
 
+            // Store OTP in session
+            otpService.storeOtp(httpSession, toEmail, otp);
+
             System.out.println("Attempting to send email to: " + toEmail);
             Transport.send(message);
             System.out.println("Verification email sent successfully to: " + toEmail);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Failed to send verification email to: " + toEmail);
             throw new RuntimeException("Failed to send email", e);
+        }
+    }
+
+    @Override
+    public boolean updateUserStatus(String email, String status) {
+        String query = "UPDATE customers SET status = ? WHERE email = ?";
+        try
+        {
+            Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, "1");
+            ps.setString(2,email);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        }
+
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            return false;
         }
     }
 }

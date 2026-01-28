@@ -18,7 +18,8 @@ public class OTPServiceImpl implements OTPService
     public void storeOtp(HttpSession session, String email, String otp) {
         session.setAttribute(otp_attribute, otp);
         session.setAttribute(otp_email_attribute, email);
-
+        System.out.println("Sessioned OTP: " + otp);
+        System.out.println("Sessioned Email " + email);
         session.setMaxInactiveInterval(300);
     }
 
