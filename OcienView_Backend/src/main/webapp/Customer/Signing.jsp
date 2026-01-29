@@ -34,7 +34,7 @@
 
 	<!-- Sign-In Container -->
 	<div class="form-container sign-in-container">
-		<form id="signinForm" action="/OceanView/LoginServlet" method="post">
+		<form id="signinForm" action="/Customer/Login" method="post">
 			<h1>Sign in</h1><br>
 			<div class="social-container">
 				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>

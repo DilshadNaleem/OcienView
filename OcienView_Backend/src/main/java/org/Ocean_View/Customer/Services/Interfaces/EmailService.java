@@ -6,4 +6,5 @@ public interface EmailService
 {
     void sendVerificationEmail (String firstName, String lastName, String toEmail, String otp, HttpSession session);
     boolean updateUserStatus(String email, String status);
+    void sendPasswordResetEmail (String toEmail, String resetLink);
 }
