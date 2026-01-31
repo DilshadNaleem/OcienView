@@ -1,17 +1,14 @@
-package org.Ocean_View.Customer.Services.Interfaces;
+package org.Ocean_View.Admin.Services.Interfaces;
 
-import com.mysql.cj.Session;
 import jakarta.servlet.http.HttpSession;
 import org.Ocean_View.Customer.DTO.EditProfileRequest;
 import org.Ocean_View.Customer.DTO.LoginRequest;
-import org.Ocean_View.Customer.DTO.RegisterRequest;
 
 import java.util.Map;
 
-
-public interface CustomerAuthService
+public interface AdminAuthService
 {
-    String loginCustomer (LoginRequest request, HttpSession session);
+    String loginAdmin (LoginRequest request, HttpSession session);
     String updateProfile(EditProfileRequest request, HttpSession session);
     Map<String, EditProfileRequest> getProfile(HttpSession session);
     String updateNewPassword(HttpSession session, String newPassword, String email);

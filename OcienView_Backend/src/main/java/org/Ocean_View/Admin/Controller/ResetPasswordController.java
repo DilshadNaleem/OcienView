@@ -1,5 +1,4 @@
-package org.Ocean_View.Customer.Controller;
-
+package org.Ocean_View.Admin.Controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,22 +6,21 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.Ocean_View.Customer.Services.Implementations.CustomerAuthServiceImpl;
-import org.Ocean_View.Customer.Services.Interfaces.CustomerAuthService;
+import org.Ocean_View.Admin.Services.Implementation.AdminAuthServiceImpl;
+import org.Ocean_View.Admin.Services.Interfaces.AdminAuthService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/Customer/ResetPassword")
+@WebServlet("/Admin/ResetPassword")
 public class ResetPasswordController extends HttpServlet
 {
-    private CustomerAuthService customerAuthService;
+    private AdminAuthService adminAuthService;
 
     public ResetPasswordController()
     {
-        this.customerAuthService = new CustomerAuthServiceImpl();
+        this.adminAuthService = new AdminAuthServiceImpl();
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +30,7 @@ public class ResetPasswordController extends HttpServlet
 
         try
         {
-            String email = (String) session.getAttribute("resetEmail") ;
+            String email = (String) session.getAttribute("resetEmail");
             String newPassword = req.getParameter("newPassword");
 
             if (req.getParameter("newPassword") == null )
@@ -40,9 +38,10 @@ public class ResetPasswordController extends HttpServlet
                 out.println("<script>alert('Parameter is missing'); window.history.back();</script>");
                 return;
             }
-            customerAuthService.updateNewPassword(session,newPassword,email );
+
+            adminAuthService.updateNewPassword(session,newPassword,email);
             out.println("<script>alert('Password Changed'); " +
-                    "window.location.href='/Customer/Signing.jsp';" +
+                    "window.location.href='/Admin/Signing.jsp';" +
                     "</script>");
             return;
         }

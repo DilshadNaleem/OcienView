@@ -1207,7 +1207,7 @@ button i {
     <div class="categories">
         <%
         // Get the vehicles list from the request attribute
-        List<Map<String, String>> vehicles = (List<Map<String, String>>) request.getAttribute("vehicles");
+        List<Map<String, String>> vehicles = (List<Map<String, String>>) request.getAttribute("rooms");
 
         // Check if vehicles list is null or empty
         if (vehicles == null || vehicles.isEmpty()) {
@@ -1219,10 +1219,10 @@ button i {
             for (Map<String, String> vehicle : vehicles) {
         %>
             <!-- The link redirects to Vehicle_Category.jsp with the vehicle name as a query parameter -->
-            <a href="/Mega_City/ProductServlet?vehicleType=<%= URLEncoder.encode(vehicle.get("vehicleName"), "UTF-8") %>" class="category-item">
+            <a href="/Customer/RoomProducts?roomType=<%= URLEncoder.encode(vehicle.get("roomName"), "UTF-8") %>" class="category-item">
                 <div>
-                    <h3><%= vehicle.get("vehicleName") %></h3>
-                    <img src="http://localhost:8080/Mega_City/<%= vehicle.get("imagePath") %>" alt="<%= vehicle.get("vehicleName") %>">
+                    <h3><%= vehicle.get("roomName") %></h3>
+                    <img src="http://localhost:8080/<%= vehicle.get("image") %>" alt="<%= vehicle.get("roomName") %>">
                 </div>
             </a>
         <%

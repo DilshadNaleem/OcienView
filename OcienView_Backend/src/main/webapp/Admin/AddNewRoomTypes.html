@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Vehicle Types</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJYy6aA7vJzF5ZC8msE5fKhuQ1ZzbyWqZTc+zJv0z7d6RmI0dZp1uNGp5Fts" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #0073bb; /* Apply primary color */
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        label {
+            font-weight: bold;
+            color: #5196c1; /* Apply secondary color */
+        }
+        input[type="text"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #5196c1; /* Apply secondary color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0073bb; /* Darker on hover */
+        }
+        .back-btn {
+            padding: 10px 20px;
+            background-color: #5196c1; /* Apply secondary color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: auto; /* Fixed width */
+            display: inline-block; /* Aligns the button properly */
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #0073bb; /* Darker on hover */
+        }
+        a {
+            text-decoration: none;
+            color: #5196c1; /* Secondary color */
+            font-weight: bold;
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #5196c1; /* Secondary color */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Add Room Types</h1>
+
+<form action="/Admin/AddRoomTypes" method="POST" >
+    <label for="category">Room Type:</label>
+    <input type="text" id="category" name="category" required><br><br>
+
+    <label for="description">Room Description:</label>
+    <textarea id="description" name="description" required></textarea><br><br>
+
+    <label for="image">Room Image:</label>
+    <input type="file" id="image" name="image" required><br><br>
+
+    <button type="submit">Add Room</button>
+    <a href="/Admin/ManageRoomTypes" class="d-block text-center">Manage RoomTypes</a>
+
+    <!-- Back Button -->
+    <button type="button" class="back-btn" onclick="back()">Back</button>
+</form>
+
+
+
+<script>
+    function back() {
+        window.history.back();  // JavaScript function to navigate back
+    }
+</script>
+
+</body>
+</html>

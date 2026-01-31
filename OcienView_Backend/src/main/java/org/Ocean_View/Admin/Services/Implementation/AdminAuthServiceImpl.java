@@ -1,12 +1,11 @@
-package org.Ocean_View.Customer.Services.Implementations;
+package org.Ocean_View.Admin.Services.Implementation;
 
 import jakarta.servlet.http.HttpSession;
+import org.Ocean_View.Admin.Services.Interfaces.AdminAuthService;
 import org.Ocean_View.Connection.DatabaseConnection;
 import org.Ocean_View.Customer.DTO.EditProfileRequest;
 import org.Ocean_View.Customer.DTO.LoginRequest;
-import org.Ocean_View.Customer.DTO.RegisterRequest;
 import org.Ocean_View.Customer.Services.HashPassword;
-import org.Ocean_View.Customer.Services.Interfaces.CustomerAuthService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,22 +14,22 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomerAuthServiceImpl implements CustomerAuthService {
-
+public class AdminAuthServiceImpl implements AdminAuthService
+{
     private final HashPassword hashPassword;
 
-    public CustomerAuthServiceImpl() {
+    public AdminAuthServiceImpl() {
         this.hashPassword = new HashPassword();
     }
 
     @Override
-    public String loginCustomer(LoginRequest request, HttpSession session) {
+    public String loginAdmin(LoginRequest request, HttpSession session) {
         String normalizedEmail = request.getEmail().trim();
-        System.out.println("CustomerAuthServiceImpl : Received Email " + normalizedEmail);
+        System.out.println("AdminAuthServiceImpl : Received Email " + normalizedEmail);
         String normalizedPassword = request.getPassword().trim();
-        System.out.println("CustomerAuthServiceImpl : Received Password " + normalizedPassword);
+        System.out.println("AdminAuthServiceImpl : Received Password " + normalizedPassword);
 
-        String query = "SELECT * FROM customers WHERE email = ? AND password = ? AND status = 1";
+        String query = "SELECT * FROM admin WHERE email = ? AND password = ? AND status = 1";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
@@ -51,7 +50,7 @@ public class CustomerAuthServiceImpl implements CustomerAuthService {
 
                 // Set session timeout (optional)
                 session.setMaxInactiveInterval(30 * 60); // 30 minutes
-                System.out.println("CustomerAuthServiceImpl : Login successful");
+                System.out.println("AdminAuthServiceImpl : Login successful");
                 return "Login successful";
             } else {
                 return "Invalid email or password";
@@ -76,7 +75,7 @@ public class CustomerAuthServiceImpl implements CustomerAuthService {
             }
 
             // Update query
-            String query = "UPDATE customers SET firstName = ?, lastName = ?, contactNumber = ? WHERE email = ?";
+            String query = "UPDATE admin SET firstName = ?, lastName = ?, contactNumber = ? WHERE email = ?";
 
             try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setString(1, request.getFirstName());
@@ -114,7 +113,7 @@ public class CustomerAuthServiceImpl implements CustomerAuthService {
             }
 
             // Fixed the query - removed "WHERE" typo
-            String query = "SELECT * FROM customers WHERE email = ?";
+            String query = "SELECT * FROM admin WHERE email = ?";
 
             try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setString(1, sessionEmail);
@@ -160,7 +159,7 @@ public class CustomerAuthServiceImpl implements CustomerAuthService {
                 return "Connection is null";
             }
 
-            String query = "UPDATE customers SET password =? WHERE email = ?";
+            String query = "UPDATE admin SET password =? WHERE email = ?";
 
             try(PreparedStatement ps = conn.prepareStatement(query))
             {

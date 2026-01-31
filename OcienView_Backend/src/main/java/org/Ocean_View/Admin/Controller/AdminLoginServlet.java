@@ -1,4 +1,4 @@
-package org.Ocean_View.Customer.Controller;
+package org.Ocean_View.Admin.Controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -6,21 +6,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.Ocean_View.Admin.Services.Implementation.AdminAuthServiceImpl;
+import org.Ocean_View.Admin.Services.Interfaces.AdminAuthService;
 import org.Ocean_View.Customer.DTO.LoginRequest;
-import org.Ocean_View.Customer.Services.Implementations.CustomerAuthServiceImpl;
-import org.Ocean_View.Customer.Services.Interfaces.CustomerAuthService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/Customer/Login")
-public class CustomerLoginServlet extends HttpServlet
+@WebServlet("/Admin/Login")
+public class AdminLoginServlet extends HttpServlet
 {
-    private final CustomerAuthService customerAuthService;
+ private final AdminAuthService adminAuthService;
 
-    public CustomerLoginServlet() {
-        this.customerAuthService = new CustomerAuthServiceImpl();
-    }
+ public AdminLoginServlet()
+ {
+     this.adminAuthService = new AdminAuthServiceImpl();
+ }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,13 +46,13 @@ public class CustomerLoginServlet extends HttpServlet
 
             HttpSession session = req.getSession();
 
-            String result = customerAuthService.loginCustomer(loginRequest,session);
+            String result = adminAuthService.loginAdmin(loginRequest,session);
 
             if ("Login successful".equals(result))
             {
                 out.print("<script>"
                         + "alert('Login Successful');"
-                        + "window.location.href = '/Customer/Dashboard';"
+                        + "window.location.href = '/Admin/Dashboard.jsp';"
                         + "</script>");
             }
             else
@@ -68,4 +69,5 @@ public class CustomerLoginServlet extends HttpServlet
             e.printStackTrace();
         }
     }
+
 }
