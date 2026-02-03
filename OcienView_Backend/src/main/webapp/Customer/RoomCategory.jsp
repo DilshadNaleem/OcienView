@@ -1,338 +1,281 @@
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+<%@page import="org.Ocean_View.Admin.Entity.Room"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashSet"%>
+<%@page import="java.util.LinkedHashSet"%>
+<%@page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vehicle Category</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-      /* General Styles */
-      body {
-            background: #85C1FF; /* Lighter Blue Background */
-            font-family: Arial, sans-serif;
-            color: #333; /* Darker text for better readability */
-            overflow-x: hidden;
-        }
-
-        /* Header */
-        h1 {
-            color: #333; /* Dark text for contrast */
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        /* Vehicle Cards */
-       /* Vehicle Card */
-.vehicle-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-    max-width: 300px; /* Adjust the max-width to make the card smaller */
-    margin: 0 auto; /* Center the card horizontally */
-}
-
-        .vehicle-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Vehicle Image */
-        .vehicle-image {
-            max-width: 80%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 2px solid #ddd;
-            transition: all 0.3s ease;
-        }
-
-        .vehicle-image:hover {
-            transform: scale(1.05);
-        }
-
-        /* Vehicle Name and Info */
-        .vehicle-card h3 {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .vehicle-card p {
-            font-size: 1rem;
-            color: #555;
-            margin-bottom: 10px;
-        }
-
-        /* Rent Price */
-        .rentperday {
-            font-size: 1.1rem;
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        /* Footer */
-        .vehicle-card-footer {
-            margin-top: 10px;
-        }
-
-        .book-now {
-            font-size: 1rem;
-            font-weight: bold;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 5px;
-            padding: 10px 20px;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .book-now:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        .book-now:focus {
-            outline: none;
-        }
-
-        /* Modal Styles */
-        .modal-content {
-            border-radius: 10px;
-        }
-
-        .modal-header {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .modal-body {
-            padding: 25px;
-        }
-
-        .modal-body .form-label {
-            font-weight: bold;
-        }
-
-        .modal-body input {
-            margin-bottom: 15px;
-            font-size: 1rem;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            width: 100%;
-        }
-
-        .modal-body input:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        /* Button Styles */
-        .btn-success {
-            font-size: 1.1rem;
-            font-weight: bold;
-            background-color: #28a745;
-            color: #fff;
-            border-radius: 5px;
-            padding: 10px 20px;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-        }
-
-        /* Input Fields */
-        input[type="date"],
-        input[type="time"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-        }
-
-        input[type="date"]:focus,
-        input[type="time"]:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        /* Container */
-        .container {
-            padding-top: 50px;
-            padding-bottom: 50px;
-        }
-
-        /* Search Form Styles */
-        .search-form {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .search-form input {
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .search-form button {
-            flex-shrink: 0;
-            background-color: #0056b3; /* Blue search button */
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .search-form button:hover {
-            background-color: #003c82; /* Darker blue on hover */
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Details - <%= request.getParameter("roomType") %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/RoomCategory.css">
 </head>
 <body>
-    <div class="container mt-4">
-        <h1>Vehicle Category: <%= request.getParameter("vehicleType") %></h1>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-hotel"></i>
+                <%= request.getParameter("roomType") != null ?
+                   request.getParameter("roomType") : "All" %> Rooms
+            </h1>
+            <p>Find the perfect accommodation for your stay</p>
+            <a href="javascript:history.back()" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Categories
+            </a>
+        </div>
 
-        <form action="ProductServlet" method="get" class="search-form mb-4">
-            <input type="hidden" name="vehicleType" value="${vehicleType}" />
-            <input type="text" name="searchQuery" placeholder="Search by name, brand, or year" class="form-control" />
-            <button type="submit" class="btn btn-primary mt-2">Search</button>
-        </form>
-        <div class="row">
-            <%
-                List<Map<String, String>> vehicleDetails = (List<Map<String, String>>) request.getAttribute("vehicleDetails");
-                if (vehicleDetails == null || vehicleDetails.isEmpty()) {
-            %>
-                <p>No vehicles found for this category.</p>
-            <%
-                } else {
-                    for (Map<String, String> vehicle : vehicleDetails) {
-                        String vehicleName = vehicle.get("vehicle_name");
-                        String vehicleYear = vehicle.get("vehicle_year");
-                        String brandName = vehicle.get("brand_name");
-                        String fullImagePath = vehicle.get("vehicle_image_path");
-                        String vehicleCondition = vehicle.get("vehicle_condition");
-                        String mileage = vehicle.get("mileage");
-                        String rentperday = vehicle.get("rent_per_day");
-                        String color = vehicle.get("color");
-            %>
-                <div class="col-md-4">
-                    <div class="vehicle-card">
-                        <% if (fullImagePath != null && !fullImagePath.isEmpty()) { %>
-                            <img src="<%= fullImagePath %>" alt="Vehicle Image" class="vehicle-image">
-                        <% } else { %>
-                            <img src="default-image.png" alt="Default Vehicle Image" class="vehicle-image">
-                        <% } %>
-                        <h3><%= vehicleName %></h3>
-                        <p><strong>Year:</strong> <%= vehicleYear %></p>
-                        <p><strong>Brand:</strong> <%= brandName %></p>
-                        <p><strong>Condition:</strong> <%= vehicleCondition %></p>
-                        <p><strong>Mileage:</strong> <%= mileage %></p>
-                        <p><strong>Rent per day:</strong> <span class="rentperday"><%= rentperday %></span></p>
-                        <p><strong>Color:</strong> <%= color %></p>
-                        <div class="vehicle-card-footer">
-                            <button class="btn btn-primary book-now" data-bs-toggle="modal" data-bs-target="#bookingModal"
-                                    data-vehicle="<%= vehicleName %>" data-rent="<%= rentperday %>">
-                                Book Now
-                            </button>
+        <%
+            // Get the list of rooms from request attribute
+            List<Room> rooms = (List<Room>) request.getAttribute("rooms");
+            String roomType = request.getParameter("roomType");
+
+            if (rooms == null || rooms.isEmpty()) {
+        %>
+            <div class="no-rooms">
+                <i class="fas fa-door-closed"></i>
+                <h2>No <%= roomType != null ? roomType : "" %> Rooms Available</h2>
+                <p>We're sorry, but there are currently no <%= roomType != null ? roomType : "" %> rooms available for booking.</p>
+                <p>Please check back later or explore other room categories.</p>
+                <a href="index.jsp" class="btn btn-book" style="margin-top: 20px; display: inline-block;">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        <%
+            } else {
+        %>
+            <div class="rooms-grid">
+                <%
+                    for (Room room : rooms) {
+                        // FIX: Sanitize ID so JavaScript can find the correct data div for every unique room
+                        String safeId = room.getUniqueId().replaceAll("[^a-zA-Z0-9]", "");
+
+                        List<String> images = room.getImageList();
+                        List<String> uniqueImages = new ArrayList<>();
+                        HashSet<String> seen = new HashSet<>();
+
+                        if (images != null) {
+                            for (String img : images) {
+                                String trimmedImg = img.trim();
+                                if (!trimmedImg.isEmpty() && !seen.contains(trimmedImg)) {
+                                    seen.add(trimmedImg);
+                                    uniqueImages.add(trimmedImg);
+                                }
+                            }
+                        }
+
+                        String mainImage = uniqueImages.isEmpty() ? "/Customer/default-room.jpg" : uniqueImages.get(0);
+                        String mainImageUrl = buildImageUrl(mainImage, request);
+                %>
+                    <div class="room-card" id="room-card-<%= safeId %>">
+                        <div class="room-image-container">
+                            <div class="main-image-wrapper">
+                                <img src="<%= mainImageUrl %>"
+                                     alt="<%= room.getRoomType() %>"
+                                     class="room-main-image"
+                                     onclick="openImageModal('<%= safeId %>', 0)"
+                                     onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/Customer/default-room.jpg';"
+                                     loading="lazy">
+
+                                <% if (uniqueImages.size() > 1) { %>
+                                    <div class="thumbnail-preview">
+                                        <%
+                                            // FIX: Corrected loop and ID reference for thumbnails
+                                            int thumbnailsToShow = Math.min(uniqueImages.size() - 1, 3);
+                                            for (int i = 1; i <= thumbnailsToShow; i++) {
+                                                String thumbImageUrl = buildImageUrl(uniqueImages.get(i), request);
+                                        %>
+                                            <div class="thumbnail-item" onclick="openImageModal('<%= safeId %>', <%= i %>)">
+                                                <img src="<%= thumbImageUrl %>"
+                                                     alt="Thumbnail <%= i %>"
+                                                     class="thumbnail-image"
+                                                     onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/Customer/default-room.jpg';"
+                                                     loading="lazy">
+                                                <%
+                                                    if (i == thumbnailsToShow && uniqueImages.size() > thumbnailsToShow + 1) {
+                                                        int remainingImages = uniqueImages.size() - (thumbnailsToShow + 1);
+                                                %>
+                                                    <div class="more-images-overlay">
+                                                        +<%= remainingImages %>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div class="room-details">
+                            <h2 class="room-title">
+                                <%= room.getRoomType() %>
+                                <span class="status-badge <%= room.getStatus().equalsIgnoreCase("Active") ? "status-available" : "status-booked" %>">
+                                    <i class="fas fa-<%= room.getStatus().equalsIgnoreCase("Active") ? "check-circle" : "times-circle" %>"></i>
+                                    <%= room.getStatus() %>
+                                </span>
+                            </h2>
+
+                            <div class="room-info">
+                                <span class="info-label"><i class="fas fa-users"></i> Capacity:</span>
+                                <span class="info-value"><%= room.getNoOfPeople() %> People</span>
+                            </div>
+
+                            <div class="room-info">
+                                <span class="info-label"><i class="fas fa-calendar-alt"></i> Created:</span>
+                                <span class="info-value">
+                                    <%= room.getCreated_at() != null ? room.getCreated_at().toLocalDate() : "N/A" %>
+                                </span>
+                            </div>
+
+                            <% if (room.getDescription() != null && !room.getDescription().isEmpty()) { %>
+                            <div class="room-info">
+                                <span class="info-label"><i class="fas fa-align-left"></i> Description:</span>
+                                <span class="info-value"><%= room.getDescription() %></span>
+                            </div>
+                            <% } %>
+
+                            <div class="price-tag">
+                                <i class="fas fa-tag"></i> LKR.<%= room.getPrice() %> / night
+                            </div>
+
+                            <% if (room.getFacilities() != null && !room.getFacilities().isEmpty()) { %>
+                            <div class="facilities-section">
+                                <h3 class="section-title"><i class="fas fa-concierge-bell"></i> Facilities</h3>
+                                <ul class="facilities-list"><%= room.getFacilities() %></ul>
+                            </div>
+                            <% } %>
+
+                              <% if (room.getRules() != null && !room.getRules().isEmpty()) { %>
+                                                         <div class="rules-section">
+                                                             <h3 class="section-title">
+                                                                 <i class="fas fa-clipboard-list"></i> Rules
+                                                             </h3>
+                                                             <ul class="rules-list">
+                                                                <%= room.getRules() %>
+                                                             </ul>
+                                                         </div>
+                                                         <% } %>
+
+                                                         <% if (room.getFine() != null && !room.getFine().isEmpty()) { %>
+                                                         <div class="fine-section">
+                                                             <h3 class="section-title">
+                                                                 <i class="fas fa-exclamation-triangle"></i> Fine Policy
+                                                             </h3>
+                                                             <p><%= room.getFine() %></p>
+                                                         </div>
+                                                         <% } %>
+
+
+                            <div id="room-images-<%= safeId %>" style="display: none;">
+                                <%= String.join(",", uniqueImages) %>
+                            </div>
+
+                            <div class="action-buttons">
+                                <% if (room.getRoomStatus().equalsIgnoreCase("Available")) { %>
+                                    <a href="<%= request.getContextPath() %>/Customer/Booking.jsp?roomId=<%= room.getUniqueId() %>&roomType=<%= URLEncoder.encode(room.getRoomType(), "UTF-8") %>"
+                                       class="btn btn-book">
+                                        <i class="fas fa-calendar-check"></i> Book Now
+                                    </a>
+                                <% } else { %>
+                                    <button class="btn btn-book btn-disabled" disabled>
+                                        <i class="fas fa-times-circle"></i> Already Booked
+                                    </button>
+                                <% } %>
+                                <a href="<%= request.getContextPath() %>/Customer/Enquiry.jsp?roomId=<%= room.getUniqueId() %>&roomType=<%= URLEncoder.encode(room.getRoomType(), "UTF-8") %>"
+                                   class="btn btn-enquiry">
+                                    <i class="fas fa-question-circle"></i> Enquire
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <%
-                    }
-                }
-            %>
-        </div>
-    </div>
-
-    <!-- Modal for booking -->
-    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bookingModalLabel">Book <span id="vehicleName"></span></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="bookVehicleServlet" method="POST">
-                        <input type="hidden" name="vehicleName" id="hiddenVehicleName">
-                        <input type="hidden" name="rentperday" id="hiddenRentPerDay">
-                        <div class="mb-3">
-                            <label for="bookingDate" class="form-label">Booking Date</label>
-                            <input type="date" class="form-control" name="bookingDate" id="bookingDate" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="bookingTime" class="form-label">Booking Time</label>
-                            <input type="time" class="form-control" name="bookingTime" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="returndate" class="form-label">Return Date</label>
-                            <input type="date" class="form-control" name="returndate" id="returndate" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="totalPrice" class="form-label">Total Price</label>
-                            <input type="text" class="form-control" name="totalPrice" id="totalPrice" readonly>
-                        </div>
-                        <button type="submit" class="btn btn-success">Confirm Booking</button>
-                    </form>
-                </div>
+                <% } %>
             </div>
-        </div>
+        <% } %>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <a class="prev" onclick="changeImage(-1)">&#10094;</a>
+        <a class="next" onclick="changeImage(1)">&#10095;</a>
+        <img class="modal-content" id="modalImage">
+        <div id="caption" class="caption"></div>
+        <div id="imageCounter" style="color: white; text-align: center; margin-top: 10px;"></div>
+    </div>
+
     <script>
-        document.querySelectorAll('.book-now').forEach(button => {
-            button.addEventListener('click', function() {
-                var vehicleName = this.getAttribute('data-vehicle');
-                var rentPerDay = this.getAttribute('data-rent');
+        let currentRoomId = '';
+        let currentImages = [];
+        let currentImageIndex = 0;
+        const contextPath = '<%= request.getContextPath() %>';
 
-                document.getElementById('vehicleName').textContent = vehicleName;
-                document.getElementById('hiddenVehicleName').value = vehicleName;
-                document.getElementById('hiddenRentPerDay').value = rentPerDay;
-            });
-        });
-
-        document.getElementById('bookingDate').addEventListener('change', calculateTotalPrice);
-        document.getElementById('returndate').addEventListener('change', calculateTotalPrice);
-
-        function calculateTotalPrice() {
-            var bookingDateValue = document.getElementById('bookingDate').value;
-            var returnDateValue = document.getElementById('returndate').value;
-            var rentPerDay = parseFloat(document.getElementById('hiddenRentPerDay').value);
-
-            if (bookingDateValue && returnDateValue) {
-                var bookingDate = new Date(bookingDateValue);
-                var returnDate = new Date(returnDateValue);
-
-                if (returnDate > bookingDate) {
-                    var timeDiff = returnDate.getTime() - bookingDate.getTime();
-                    var dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                    var totalPrice = dayDiff * rentPerDay;
-                    document.getElementById('totalPrice').value = totalPrice.toFixed(2);
-                } else {
-                    alert('Return date must be after the booking date.');
-document.getElementById('returndate').value = ''; // Clear the return date field
-document.getElementById('totalPrice').value = ''; // Clear total price
-document.getElementById('returndate').focus(); // Focus on return date field
-
-                }
-            }
+        function buildJsImageUrl(imagePath) {
+            imagePath = imagePath.trim();
+            if (imagePath.startsWith('http')) return imagePath;
+            const cleanPath = imagePath.startsWith('/') ? imagePath : '/' + imagePath;
+            // Ensure we don't double the context path
+            return cleanPath.startsWith(contextPath) ? window.location.origin + cleanPath : window.location.origin + contextPath + cleanPath;
         }
+
+        function openImageModal(roomId, imageIndex) {
+            const imageDataDiv = document.getElementById('room-images-' + roomId);
+            if (!imageDataDiv) return;
+
+            const imagePaths = imageDataDiv.textContent.split(',');
+            currentImages = imagePaths.map(img => buildJsImageUrl(img));
+            currentRoomId = roomId;
+            currentImageIndex = parseInt(imageIndex) || 0;
+
+            document.getElementById('imageModal').style.display = "block";
+            document.body.style.overflow = "hidden";
+            updateModalImage();
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        function changeImage(direction) {
+            if (currentImages.length === 0) return;
+            currentImageIndex = (currentImageIndex + direction + currentImages.length) % currentImages.length;
+            updateModalImage();
+        }
+
+        function updateModalImage() {
+            if (currentImages.length === 0) return;
+            const modalImage = document.getElementById('modalImage');
+            const caption = document.getElementById('caption');
+            const counter = document.getElementById('imageCounter');
+
+            modalImage.src = currentImages[currentImageIndex];
+            caption.innerHTML = `Room: ${currentRoomId} | Image ${currentImageIndex + 1} of ${currentImages.length}`;
+            counter.innerHTML = `${currentImageIndex + 1} / ${currentImages.length}`;
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('imageModal')) closeModal();
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (document.getElementById('imageModal').style.display === 'block') {
+                if (event.key === 'Escape') closeModal();
+                if (event.key === 'ArrowLeft') changeImage(-1);
+                if (event.key === 'ArrowRight') changeImage(1);
+            }
+        });
     </script>
 </body>
 </html>
+
+<%!
+    private String buildImageUrl(String imagePath, HttpServletRequest request) {
+        if (imagePath == null || imagePath.trim().isEmpty()) {
+            return request.getContextPath() + "/Customer/default-room.jpg";
+        }
+        imagePath = imagePath.trim();
+        if (imagePath.startsWith("http")) return imagePath;
+        return request.getContextPath() + (imagePath.startsWith("/") ? "" : "/") + imagePath;
+    }
+%>

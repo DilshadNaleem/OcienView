@@ -12,7 +12,7 @@ public class Room
     private String description;
     private String noOfPeople;
     private String Facilities;
-
+    private String roomStatus;
     private String fine;
     private String rules;
     private String images;
@@ -22,6 +22,13 @@ public class Room
     private String roomCategoryId;
     private String roomType;
 
+    public String getRoomStatus() {
+        return roomStatus;
+    }
+
+    public void setRoomStatus(String roomStatus) {
+        this.roomStatus = roomStatus;
+    }
 
     public String getPrice() {
         return price;

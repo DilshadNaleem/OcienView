@@ -62,7 +62,9 @@ public class ManageRoomController extends HttpServlet {
 
             // Handle multiple image uploads
             List<String> imagePaths = new ArrayList<>();
-            String roomImageDirectory = "C:\\Users\\HP\\Desktop\\Shimer\\OcienView\\OcienView_Backend\\main\\webapp\\Room_Images\\" + newUniqueId;
+            String roomImageDirectory = "C:\\Users\\HP\\Desktop\\Shimer\\OcienView\\OcienView_Backend\\src\\main\\webapp\\Room_Images\\" + newUniqueId;
+
+
 
             // Create room-specific directory
             File roomDir = new File(roomImageDirectory);
