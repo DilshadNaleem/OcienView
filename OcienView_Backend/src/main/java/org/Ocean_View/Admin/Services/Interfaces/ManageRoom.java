@@ -1,12 +1,11 @@
 package org.Ocean_View.Admin.Services.Interfaces;
 
-import jakarta.servlet.http.Part;
-
-import java.io.IOException;
+import org.Ocean_View.Admin.Entity.Room;
 
 public interface ManageRoom
 {
-    void saveRoomType(String uniqueId, String category, String description, String imagePath);
     String getLastUniqueId();
-    String saveRoomImage(Part filePart) throws IOException;
+    void saveRoom(Room room);
+
+
 }

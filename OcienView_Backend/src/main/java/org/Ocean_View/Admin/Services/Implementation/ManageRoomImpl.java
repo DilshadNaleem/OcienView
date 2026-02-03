@@ -1,57 +1,30 @@
 package org.Ocean_View.Admin.Services.Implementation;
 
-import jakarta.servlet.http.Part;
-import org.Ocean_View.Admin.Services.FileUploader;
+import org.Ocean_View.Admin.Entity.Room;
 import org.Ocean_View.Admin.Services.Interfaces.ManageRoom;
 import org.Ocean_View.Connection.DatabaseConnection;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
+import java.text.DateFormat;
 
 public class ManageRoomImpl implements ManageRoom
 {
-    private FileUploader fileService;
-
-    public ManageRoomImpl(FileUploader fileService)
-    {
-        this.fileService = fileService;
-    }
-
-    @Override
-    public void saveRoomType(String uniqueId, String category, String description, String imagePath) {
-
-        String sql = "INSERT INTO room_type (unique_id, roomCategory,description, image, created_at) VALUES (?, ?, ?,?, NOW())";
-        try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql))
-        {
-            ps.setString(1,uniqueId);
-            ps.setString(2,category);
-            ps.setString(3,description);
-            ps.setString(4,imagePath);
-            ps.executeUpdate();
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public String getLastUniqueId() {
-        String query = "SELECT unique_id FROM room_type ORDER BY unique_id DESC LIMIT 1";
+        String query = "SELECT uniqueID FROM rooms ORDER BY uniqueID DESC LIMIT 1";
         try(Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery())
         {
             if (rs.next())
             {
-                return rs.getString("unique_id");
+                return rs.getString("uniqueID");
             }
         }
+
         catch (SQLException e)
         {
             e.printStackTrace();
@@ -60,8 +33,49 @@ public class ManageRoomImpl implements ManageRoom
         return null;
     }
 
+
     @Override
-    public String saveRoomImage(Part filePart) throws IOException {
-        return fileService.saveFile(filePart);
+    public void saveRoom(Room room)
+    {
+        String sql = "INSERT INTO rooms (uniqueID, description, noOfPeople, facilities,  " +
+                "fine, status, rules, images, roomCategoryID, roomType ,price, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?, NOW())";
+        try(Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql))
+        {
+            ps.setString(1,room.getUniqueId());
+            ps.setString(2,room.getDescription());
+            ps.setString(3,room.getNoOfPeople());
+            ps.setString(4,room.getFacilities());
+            ps.setString(5,room.getFine());
+            ps.setString(6,"Active");
+            ps.setString(7,room.getRules());
+            ps.setString(8,room.getImages());
+            ps.setString(9,room.getRoomCategoryId());
+            ps.setString(10,room.getRoomType());
+            ps.setString(11, room.getPrice());
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0)
+            {
+                System.out.println("Room Saved Successfully");
+            }
+        }
+
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private java.sql.Date convertToSQLDate(DateFormat dateFormat) {
+        if (dateFormat == null) return null;
+        try {
+            java.util.Date utilDate = dateFormat.parse(dateFormat.format(new java.util.Date()));
+            return new java.sql.Date(utilDate.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

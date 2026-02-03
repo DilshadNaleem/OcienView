@@ -1,28 +1,26 @@
 package org.Ocean_View.Admin.Controller;
 
-import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.Ocean_View.Admin.Services.FileUploader;
-import org.Ocean_View.Admin.Services.Implementation.ManageRoomImpl;
-import org.Ocean_View.Admin.Services.Interfaces.ManageRoom;
+import org.Ocean_View.Admin.Services.Implementation.ManageRoomTypeImpl;
+import org.Ocean_View.Admin.Services.Interfaces.ManageRoomType;
 import org.Ocean_View.Admin.Services.RoomTypeIdGenerator;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/Admin/AddRoomTypes")
 public class RoomTypesController extends HttpServlet
 {
-    private ManageRoom manageRoom;
+    private ManageRoomType manageRoom;
 
 
     @Override
     public void init() throws ServletException {
-        manageRoom = new ManageRoomImpl(new FileUploader());
+        manageRoom = new ManageRoomTypeImpl(new FileUploader());
     }
 
     @Override
