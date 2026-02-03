@@ -110,11 +110,12 @@
 
                         <div class="room-details">
                             <h2 class="room-title">
-                                <%= room.getRoomType() %>
+                                <%= room.getUniqueId() %>
                                 <span class="status-badge <%= room.getStatus().equalsIgnoreCase("Active") ? "status-available" : "status-booked" %>">
                                     <i class="fas fa-<%= room.getStatus().equalsIgnoreCase("Active") ? "check-circle" : "times-circle" %>"></i>
                                     <%= room.getStatus() %>
                                 </span>
+
                             </h2>
 
                             <div class="room-info">
@@ -161,7 +162,7 @@
                                                          <% if (room.getFine() != null && !room.getFine().isEmpty()) { %>
                                                          <div class="fine-section">
                                                              <h3 class="section-title">
-                                                                 <i class="fas fa-exclamation-triangle"></i> Fine Policy
+                                                                 <i class="fas fa-exclamation-triangle"></i> Fine Price
                                                              </h3>
                                                              <p><%= room.getFine() %></p>
                                                          </div>
@@ -173,21 +174,19 @@
                             </div>
 
                             <div class="action-buttons">
-                                <% if (room.getRoomStatus().equalsIgnoreCase("Available")) { %>
-                                    <a href="<%= request.getContextPath() %>/Customer/Booking.jsp?roomId=<%= room.getUniqueId() %>&roomType=<%= URLEncoder.encode(room.getRoomType(), "UTF-8") %>"
-                                       class="btn btn-book">
-                                        <i class="fas fa-calendar-check"></i> Book Now
-                                    </a>
-                                <% } else { %>
-                                    <button class="btn btn-book btn-disabled" disabled>
-                                        <i class="fas fa-times-circle"></i> Already Booked
-                                    </button>
-                                <% } %>
+
+                                   <button class="btn btn-book"
+                                           onclick="openBookingModal('<%= room.getUniqueId() %>', <%= room.getPrice() %>)">
+                                       <i class="fas fa-calendar-check"></i> Book Now
+                                   </button>
+
                                 <a href="<%= request.getContextPath() %>/Customer/Enquiry.jsp?roomId=<%= room.getUniqueId() %>&roomType=<%= URLEncoder.encode(room.getRoomType(), "UTF-8") %>"
                                    class="btn btn-enquiry">
                                     <i class="fas fa-question-circle"></i> Enquire
                                 </a>
                             </div>
+
+
                         </div>
                     </div>
                 <% } %>
@@ -265,7 +264,126 @@
                 if (event.key === 'ArrowRight') changeImage(1);
             }
         });
+
+        function openBookingModal(roomId, price) {
+            document.getElementById('modalRoomId').value = roomId;
+            document.getElementById('modalRoomPrice').value = price;
+            document.getElementById('bookingModal').style.display = "block";
+
+            // Set min date to Today
+            const today = new Date().toISOString().split('T')[0];
+            const checkInInput = document.getElementById('checkIn');
+            const checkOutInput = document.getElementById('checkOut');
+
+            checkInInput.setAttribute('min', today);
+            checkOutInput.setAttribute('min', today);
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').style.display = "none";
+            document.getElementById('bookingForm').reset();
+            toggleCardDetails(false);
+        }
+
+        function calculateTotal() {
+            const checkInVal = document.getElementById('checkIn').value;
+            const checkOutVal = document.getElementById('checkOut').value;
+            const pricePerNight = parseFloat(document.getElementById('modalRoomPrice').value) || 0;
+
+            // Set min date for checkout
+            if (checkInVal) {
+                document.getElementById('checkOut').setAttribute('min', checkInVal);
+            }
+
+            if (checkInVal && checkOutVal) {
+                const checkIn = new Date(checkInVal);
+                const checkOut = new Date(checkOutVal);
+
+                if (checkOut > checkIn) {
+                    const diffTime = Math.abs(checkOut - checkIn);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    const finalPrice = (diffDays * pricePerNight).toFixed(2);
+
+                    // UPDATE: Using .value instead of .innerText
+                    document.getElementById('displayDays').value = diffDays;
+                    document.getElementById('displayTotal').value = finalPrice;
+                } else {
+                    resetTotals();
+                }
+            } else {
+                resetTotals();
+            }
+        }
+
+        function resetTotals() {
+            document.getElementById('displayDays').value = "0";
+            document.getElementById('displayTotal').value = "0.00";
+        }
+
+        function toggleCardDetails(show) {
+            document.getElementById('cardDetails').style.display = show ? "block" : "none";
+        }
     </script>
+
+    <div id="bookingModal" class="modal">
+        <div class="modal-content booking-form-card">
+            <span class="close" onclick="closeBookingModal()">&times;</span>
+            <h2>Confirm Your Booking</h2>
+            <form id="bookingForm" action="ProcessBookingServlet" method="POST">
+                <input type="hidden" name="roomId" id="modalRoomId">
+                <input type="hidden" name="roomPrice" id="modalRoomPrice">
+
+
+                <div class="form-group">
+                    <label>Check-in Date:</label>
+                    <input type="date" name="checkIn" id="checkIn" required onchange="calculateTotal()">
+                </div>
+
+                <div class="form-group">
+                    <label>Check-out Date:</label>
+                    <input type="date" name="checkOut" id="checkOut" required onchange="calculateTotal()">
+                </div>
+
+               <div class="booking-summary">
+                   <div class="summary-item">
+                       <label>Total Days</label>
+                       <div class="input-wrapper">
+                           <input type="text" name="totalDays" id="displayDays" value="0" readonly>
+                           <span>Days</span>
+                       </div>
+                   </div>
+
+                   <div class="summary-item">
+                       <label>Total Price</label>
+                       <div class="input-wrapper">
+                           <span class="currency">LKR</span>
+                           <input type="text" name="totalPrice" id="displayTotal" value="0.00" readonly class="total-amount">
+                       </div>
+                   </div>
+               </div>
+
+                <div class="payment-section">
+                    <h3>Payment Method</h3>
+                    <div class="payment-options">
+                        <label><input type="radio" name="paymentMethod" value="cash" checked onclick="toggleCardDetails(false)"> Cash</label>
+                        <label><input type="radio" name="paymentMethod" value="card" onclick="toggleCardDetails(true)"> Debit/Credit Card</label>
+                    </div>
+
+                    <div id="cardDetails" style="display: none; margin-top: 15px;">
+                        <input type="text" placeholder="Card Number" class="form-input">
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <input type="text" placeholder="MM/YY" style="flex: 1;" class="form-input">
+                            <input type="text" placeholder="CVV" style="flex: 1;" class="form-input">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-book" style="width: 100%; margin-top: 20px;">
+                    Confirm & Pay
+                </button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
 

@@ -638,3 +638,234 @@
                 height: 30px;
             }
         }
+
+
+        /* --- Advanced Booking Modal Styling --- */
+
+        /* Background Overlay */
+        #bookingModal.modal {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px); /* Modern blur effect */
+            z-index: 2000;
+        }
+
+        /* Modal Box */
+        .booking-form-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 500px;
+            margin: 5% auto;
+            padding: 40px;
+            position: relative;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .booking-form-card h2 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid #f0f3f5;
+            padding-bottom: 15px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="date"]:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        /* Summary Box */
+        .booking-summary {
+            background: linear-gradient(135deg, #f8fbff 0%, #eef5ff 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px dashed #3498db;
+        }
+
+        .booking-summary p {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            color: #5d6d7e;
+        }
+
+        .booking-summary strong {
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+
+        /* Payment Section */
+        .payment-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-options label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .payment-options label:has(input:checked) {
+            border-color: #3498db;
+            background-color: #ebf5fb;
+        }
+
+        /* Card Detail Animation */
+        #cardDetails {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+        }
+
+        /* Close Button */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 20px;
+            font-size: 28px;
+            color: #bdc3c7;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close:hover {
+            color: #e74c3c;
+        }
+
+        /* Confirm Button */
+        .btn-confirm {
+            background: #27ae60;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn-confirm:hover {
+            background: #2ecc71;
+            transform: translateY(-2px);
+        }
+
+        .btn-confirm:active {
+            transform: translateY(0);
+        }
+
+        .booking-summary {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-item label {
+            font-weight: 600;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .input-wrapper input {
+            border: none;
+            background: transparent;
+            width: 80px;
+            text-align: right;
+            font-weight: 700;
+            color: #1e293b;
+            outline: none;
+            font-family: 'Courier New', Courier, monospace; /* Monospaced for numbers */
+        }
+
+        .input-wrapper input.total-amount {
+            width: 120px;
+            color: #059669; /* Green for price */
+            font-size: 1.1rem;
+        }
+
+        .currency, .input-wrapper span {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }

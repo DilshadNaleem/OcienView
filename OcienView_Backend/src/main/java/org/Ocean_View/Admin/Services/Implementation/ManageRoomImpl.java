@@ -38,7 +38,7 @@ public class ManageRoomImpl implements ManageRoom
     public void saveRoom(Room room)
     {
         String sql = "INSERT INTO rooms (uniqueID, description, noOfPeople, facilities,  " +
-                "fine, status, rules, images, roomCategoryID, roomType ,price, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?, NOW())";
+                "fine, status, rules, images, roomCategoryID, roomType ,price, roomStatus, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?, NOW())";
         try(Connection conn = DatabaseConnection.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql))
         {
@@ -53,6 +53,7 @@ public class ManageRoomImpl implements ManageRoom
             ps.setString(9,room.getRoomCategoryId());
             ps.setString(10,room.getRoomType());
             ps.setString(11, room.getPrice());
+            ps.setString(12,"Available");
 
             int rowsAffected = ps.executeUpdate();
 
