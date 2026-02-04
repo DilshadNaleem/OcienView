@@ -99,6 +99,7 @@ public class ProcessBookingServlet extends HttpServlet {
 
             // 7. Handle Response
             if ("Reservation Successful".equals(result)) {
+                session.setAttribute("lastBooking", booking);
                 out.println("<script>");
                 out.println("alert('Booking Confirmed! Your Booking ID is: " + bookingId + "');");
                 out.println("window.location.href = 'BookingSuccess.jsp?id=" + bookingId + "';");
