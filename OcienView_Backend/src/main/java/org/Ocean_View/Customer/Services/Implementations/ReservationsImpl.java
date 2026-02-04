@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -138,9 +139,10 @@ public class ReservationsImpl implements Reservations {
 
     public List<Map<String, String>> getBookedDates(String roomId) {
         List<Map<String, String>> bookedDates = new ArrayList<>();
-        String query = "SELECT inDate, outDate FROM reservations WHERE roomId = ? AND bookingStatus = 'Booked'";
+        // Get ALL reservations (not just 'Booked') to be safe
+        String query = "SELECT inDate, outDate FROM reservations WHERE roomId = ? AND (bookingStatus = 'Booked' OR bookingStatus = 'Confirmed')";
 
-        try (Connection conn = DatabaseConnection.getConnection(); // Use your DB connection method
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setString(1, roomId);
@@ -148,9 +150,12 @@ public class ReservationsImpl implements Reservations {
 
             while (rs.next()) {
                 Map<String, String> range = new HashMap<>();
-                range.put("checkIn", rs.getDate("inDate").toString());
-                range.put("checkOut", rs.getDate("outDate").toString());
+                // Format dates as yyyy-MM-dd
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                range.put("checkIn", sdf.format(rs.getDate("inDate")));
+                range.put("checkOut", sdf.format(rs.getDate("outDate")));
                 bookedDates.add(range);
+                System.out.println("Booked Dates - From: " + range.get("checkIn") + " To: " + range.get("checkOut"));
             }
         } catch (Exception e) {
             e.printStackTrace();

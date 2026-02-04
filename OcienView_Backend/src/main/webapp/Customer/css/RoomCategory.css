@@ -869,3 +869,29 @@
             color: #94a3b8;
             font-weight: 600;
         }
+
+
+        .flatpickr-calendar {
+            background: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .flatpickr-day.disabled,
+        .flatpickr-day.disabled:hover {
+            color: #ccc;
+            background: #f8f8f8;
+            cursor: not-allowed;
+        }
+
+        .flatpickr-day.inRange {
+            background: #e6f7ff;
+            border-color: #e6f7ff;
+        }
+
+        .flatpickr-day.selected,
+        .flatpickr-day.startRange,
+        .flatpickr-day.endRange {
+            background: #007bff;
+            border-color: #007bff;
+        }

@@ -272,81 +272,110 @@
         });
 
 
-        async function openBookingModal(roomId, price,category) {
+       let unavailableDates = [];
 
-        unavailableDates = [];
+       async function openBookingModal(roomId, price, category) {
+           unavailableDates = [];
 
-            document.getElementById('modalRoomId').value = roomId;
-            document.getElementById('modalRoomPrice').value = price;
-            document.getElementById('modalRoomCategory').value = category;
-            document.getElementById('bookingModal').style.display = "block";
+           document.getElementById('modalRoomId').value = roomId;
+           document.getElementById('modalRoomPrice').value = price;
+           document.getElementById('modalRoomCategory').value = category;
+           document.getElementById('bookingModal').style.display = "block";
 
-            // Set min date to Today
-            const today = new Date().toISOString().split('T')[0];
-            const checkInInput = document.getElementById('checkIn');
-            const checkOutInput = document.getElementById('checkOut');
+           // Set min date to Today
+           const today = new Date().toISOString().split('T')[0];
+           const checkInInput = document.getElementById('checkIn');
+           const checkOutInput = document.getElementById('checkOut');
+
+           checkInInput.min = today;
+           checkOutInput.min = today;
+           checkInInput.value = '';
+           checkOutInput.value = '';
+           resetTotals();
 
            try {
-                   const response = await fetch(`${contextPath}/Customer/GetBookedDates?roomId=${roomId}`);
-                   unavailableDates = await response.json();
-                   console.log("Booked dates for this room:", unavailableDates);
-               } catch (err) {
-                   console.error("Failed to fetch booked dates", err);
-               }
-        }
+               const response = await fetch(`${contextPath}/Customer/GetBookedDates?roomId=\${encodeURIComponent(roomId)}`);
+               unavailableDates = await response.json();
+               console.log("Booked dates for this room:", unavailableDates);
+
+               // Initialize Flatpickr with disabled dates
+               initializeDatePickers();
+
+           } catch (err) {
+               console.error("Failed to fetch booked dates", err);
+           }
+       }
+
+      function initializeDatePickers() {
+          const checkInInput = document.getElementById('checkIn');
+          const checkOutInput = document.getElementById('checkOut');
+
+          // Prepare disabled date ranges from your database
+          const disabledRanges = unavailableDates.map(range => ({
+              from: range.checkIn,
+              to: range.checkOut
+          }));
+
+          // Initialize check-in date picker
+          checkInPicker = flatpickr(checkInInput, {
+              minDate: "today",
+              dateFormat: "Y-m-d",
+              disable: disabledRanges,
+              onChange: function(selectedDates, dateStr) {
+                  if (selectedDates.length > 0) {
+                      // 1. Set the minimum check-out date to the day after check-in
+                      const nextDay = new Date(selectedDates[0]);
+                      nextDay.setDate(nextDay.getDate() + 1);
+
+                      checkOutPicker.set('minDate', nextDay);
+
+                      // 2. Clear the check-out value to force a new selection
+                      checkOutPicker.clear();
+                      resetTotals();
+
+                      // 3. Open the check-out picker automatically for better UX
+                      setTimeout(() => checkOutPicker.open(), 100);
+                  }
+              }
+          });
+
+          // Initialize check-out date picker
+          checkOutPicker = flatpickr(checkOutInput, {
+              // Initially, check-out cannot be before tomorrow
+              minDate: new Date().fp_incr(1),
+              dateFormat: "Y-m-d",
+              disable: disabledRanges,
+              onChange: function(selectedDates, dateStr) {
+                  calculateTotal();
+              }
+          });
+      }
+
+      function calculateTotal() {
+          const checkInVal = document.getElementById('checkIn').value;
+          const checkOutVal = document.getElementById('checkOut').value;
+          const pricePerNight = parseFloat(document.getElementById('modalRoomPrice').value) || 0;
+
+          if (checkInVal && checkOutVal) {
+              const userIn = new Date(checkInVal);
+              const userOut = new Date(checkOutVal);
+
+              if (userOut > userIn) {
+                  const diffTime = Math.abs(userOut - userIn);
+                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                  document.getElementById('displayDays').value = diffDays;
+                  document.getElementById('displayTotal').value = (diffDays * pricePerNight).toFixed(2);
+              } else {
+                  resetTotals();
+              }
+          }
+      }
 
         function closeBookingModal() {
             document.getElementById('bookingModal').style.display = "none";
             document.getElementById('bookingForm').reset();
             toggleCardDetails(false);
-        }
-
-        function calculateTotal() {
-            const checkInInput = document.getElementById('checkIn');
-            const checkOutInput = document.getElementById('checkOut');
-            const checkInVal = checkInInput.value;
-            const checkOutVal = checkOutInput.value;
-            const pricePerNight = parseFloat(document.getElementById('modalRoomPrice').value) || 0;
-
-            if (checkInVal) {
-                checkOutInput.setAttribute('min', checkInVal);
-            }
-
-            if (checkInVal && checkOutVal) {
-                const userIn = new Date(checkInVal);
-                const userOut = new Date(checkOutVal);
-
-                // --- OVERLAP VALIDATION LOGIC ---
-                const isOverlap = unavailableDates.some(range => {
-                    const bookedIn = new Date(range.checkIn);
-                    const bookedOut = new Date(range.checkOut);
-                    // Logic: A booking overlaps if (UserStart < BookedEnd) AND (UserEnd > BookedStart)
-                    console.table(unavailableDates);
-                    return (userIn < bookedOut && userOut > bookedIn);
-
-
-                });
-
-                if (isOverlap) {
-                    alert("❌ Conflict: This room is already booked during the selected dates. Please choose another stay period.");
-                    checkInInput.value = "";
-                    checkOutInput.value = "";
-                    resetTotals();
-                    return;
-                }
-                // --- END VALIDATION ---
-
-                if (userOut > userIn) {
-                    const diffTime = Math.abs(userOut - userIn);
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    document.getElementById('displayDays').value = diffDays;
-                    document.getElementById('displayTotal').value = (diffDays * pricePerNight).toFixed(2);
-                } else {
-                    resetTotals();
-                }
-            } else {
-                resetTotals();
-            }
         }
 
         function resetTotals() {
