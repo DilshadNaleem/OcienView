@@ -164,7 +164,7 @@
                                                              <h3 class="section-title">
                                                                  <i class="fas fa-exclamation-triangle"></i> Fine Price
                                                              </h3>
-                                                             <p><%= room.getFine() %></p>
+                                                             <p>LKR. <%= room.getFine() %></p>
                                                          </div>
                                                          <% } %>
 
@@ -176,7 +176,7 @@
                             <div class="action-buttons">
 
                                    <button class="btn btn-book"
-                                           onclick="openBookingModal('<%= room.getUniqueId() %>', <%= room.getPrice() %>)">
+                                           onclick="openBookingModal('<%= room.getUniqueId() %>', '<%= room.getPrice() %>', '<%= room.getRoomType() %>')">
                                        <i class="fas fa-calendar-check"></i> Book Now
                                    </button>
 
@@ -265,9 +265,10 @@
             }
         });
 
-        function openBookingModal(roomId, price) {
+        function openBookingModal(roomId, price,category) {
             document.getElementById('modalRoomId').value = roomId;
             document.getElementById('modalRoomPrice').value = price;
+            document.getElementById('modalRoomCategory').value = category;
             document.getElementById('bookingModal').style.display = "block";
 
             // Set min date to Today
@@ -329,9 +330,10 @@
         <div class="modal-content booking-form-card">
             <span class="close" onclick="closeBookingModal()">&times;</span>
             <h2>Confirm Your Booking</h2>
-            <form id="bookingForm" action="ProcessBookingServlet" method="POST">
+            <form id="bookingForm" action="ProcessBooking" method="POST">
                 <input type="hidden" name="roomId" id="modalRoomId">
                 <input type="hidden" name="roomPrice" id="modalRoomPrice">
+                <input type="hidden" name="roomCategory" id="modalRoomCategory">
 
 
                 <div class="form-group">

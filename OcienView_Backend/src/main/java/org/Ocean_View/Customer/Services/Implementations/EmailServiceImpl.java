@@ -5,6 +5,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 import org.Ocean_View.Connection.DatabaseConnection;
+import org.Ocean_View.Customer.Entity.Booking;
 import org.Ocean_View.Customer.Services.Interfaces.EmailService;
 import org.Ocean_View.Customer.Services.Interfaces.OTPService;
 
@@ -208,5 +209,8 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Override
+    public void sendBookingConfirmation(String toEmail, Booking booking) {
 
+    }
 }
