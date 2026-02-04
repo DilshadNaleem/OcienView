@@ -8,6 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ReservationsImpl implements Reservations {
 
@@ -130,5 +134,27 @@ public class ReservationsImpl implements Reservations {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Map<String, String>> getBookedDates(String roomId) {
+        List<Map<String, String>> bookedDates = new ArrayList<>();
+        String query = "SELECT inDate, outDate FROM reservations WHERE roomId = ? AND bookingStatus = 'Booked'";
+
+        try (Connection conn = DatabaseConnection.getConnection(); // Use your DB connection method
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, roomId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Map<String, String> range = new HashMap<>();
+                range.put("checkIn", rs.getDate("inDate").toString());
+                range.put("checkOut", rs.getDate("outDate").toString());
+                bookedDates.add(range);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bookedDates;
     }
 }

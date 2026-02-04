@@ -115,4 +115,6 @@ public class ProcessBookingServlet extends HttpServlet {
             out.println("<script>alert('An internal error occurred: " + e.getMessage() + "'); history.back();</script>");
         }
     }
+
+
 }

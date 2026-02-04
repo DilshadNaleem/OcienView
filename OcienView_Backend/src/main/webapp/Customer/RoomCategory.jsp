@@ -13,6 +13,9 @@
     <title>Room Details - <%= request.getParameter("roomType") %></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="./css/RoomCategory.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 </head>
 <body>
     <div class="container">
@@ -204,6 +207,9 @@
     </div>
 
     <script>
+        let checkInPicker = null;
+        let checkOutPicker = null;
+
         let currentRoomId = '';
         let currentImages = [];
         let currentImageIndex = 0;
@@ -265,7 +271,11 @@
             }
         });
 
-        function openBookingModal(roomId, price,category) {
+
+        async function openBookingModal(roomId, price,category) {
+
+        unavailableDates = [];
+
             document.getElementById('modalRoomId').value = roomId;
             document.getElementById('modalRoomPrice').value = price;
             document.getElementById('modalRoomCategory').value = category;
@@ -276,8 +286,13 @@
             const checkInInput = document.getElementById('checkIn');
             const checkOutInput = document.getElementById('checkOut');
 
-            checkInInput.setAttribute('min', today);
-            checkOutInput.setAttribute('min', today);
+           try {
+                   const response = await fetch(`${contextPath}/Customer/GetBookedDates?roomId=${roomId}`);
+                   unavailableDates = await response.json();
+                   console.log("Booked dates for this room:", unavailableDates);
+               } catch (err) {
+                   console.error("Failed to fetch booked dates", err);
+               }
         }
 
         function closeBookingModal() {
@@ -287,27 +302,45 @@
         }
 
         function calculateTotal() {
-            const checkInVal = document.getElementById('checkIn').value;
-            const checkOutVal = document.getElementById('checkOut').value;
+            const checkInInput = document.getElementById('checkIn');
+            const checkOutInput = document.getElementById('checkOut');
+            const checkInVal = checkInInput.value;
+            const checkOutVal = checkOutInput.value;
             const pricePerNight = parseFloat(document.getElementById('modalRoomPrice').value) || 0;
 
-            // Set min date for checkout
             if (checkInVal) {
-                document.getElementById('checkOut').setAttribute('min', checkInVal);
+                checkOutInput.setAttribute('min', checkInVal);
             }
 
             if (checkInVal && checkOutVal) {
-                const checkIn = new Date(checkInVal);
-                const checkOut = new Date(checkOutVal);
+                const userIn = new Date(checkInVal);
+                const userOut = new Date(checkOutVal);
 
-                if (checkOut > checkIn) {
-                    const diffTime = Math.abs(checkOut - checkIn);
+                // --- OVERLAP VALIDATION LOGIC ---
+                const isOverlap = unavailableDates.some(range => {
+                    const bookedIn = new Date(range.checkIn);
+                    const bookedOut = new Date(range.checkOut);
+                    // Logic: A booking overlaps if (UserStart < BookedEnd) AND (UserEnd > BookedStart)
+                    console.table(unavailableDates);
+                    return (userIn < bookedOut && userOut > bookedIn);
+
+
+                });
+
+                if (isOverlap) {
+                    alert("❌ Conflict: This room is already booked during the selected dates. Please choose another stay period.");
+                    checkInInput.value = "";
+                    checkOutInput.value = "";
+                    resetTotals();
+                    return;
+                }
+                // --- END VALIDATION ---
+
+                if (userOut > userIn) {
+                    const diffTime = Math.abs(userOut - userIn);
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    const finalPrice = (diffDays * pricePerNight).toFixed(2);
-
-                    // UPDATE: Using .value instead of .innerText
                     document.getElementById('displayDays').value = diffDays;
-                    document.getElementById('displayTotal').value = finalPrice;
+                    document.getElementById('displayTotal').value = (diffDays * pricePerNight).toFixed(2);
                 } else {
                     resetTotals();
                 }
