@@ -151,8 +151,9 @@ public class EmailServiceImpl implements EmailService {
                     "</div>" +
                     "</body>" +
                     "</html>";
-
-            sendHtmlEmail(toEmail, subject, content);
+            String setSubject = "Password Reset Link";
+            sendHtmlEmail(toEmail, subject, content, setSubject);
+            System.out.println("Confirmation email Send " + toEmail);
         }
         catch (RuntimeException e) {
             // Re-throw custom exceptions
@@ -162,6 +163,76 @@ public class EmailServiceImpl implements EmailService {
         {
             e.printStackTrace();
             throw new RuntimeException("Failed to send password reset email", e);
+        }
+    }
+
+    @Override
+    public void sendBookingConfirmation(String toEmail, Booking booking) {
+        try {
+            String subject = "Reservation Confirmed - " + booking.getUniqueId();
+
+            String content = "<div style='font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;'>"
+                    + "  <div style='background-color: #2E86C1; padding: 25px; text-align: center; color: white;'>"
+                    + "    <h1 style='margin: 0; font-size: 24px;'>Booking Confirmed!</h1>"
+                    + "    <p style='margin: 5px 0 0; opacity: 0.9;'>Thank you for choosing Ocean View</p>"
+                    + "  </div>"
+                    + "  <div style='padding: 30px; background-color: #ffffff;'>"
+                    + "    <p style='font-size: 16px; color: #333;'>Dear <strong>" + booking.getCustomerFirstName() + " " + booking.getCustomerLastName() + "</strong>,</p>"
+                    + "    <p style='color: #666; line-height: 1.6;'>Your reservation has been successfully processed. We are looking forward to welcoming you! Below are your booking details:</p>"
+                    + "    "
+                    + "    <div style='margin-top: 25px; border-top: 2px solid #f2f2f2; padding-top: 20px;'>"
+                    + "      <table style='width: 100%; border-collapse: collapse;'>"
+                    + "        <tr>"
+                    + "          <td style='padding: 8px 0; color: #888;'>Reservation ID:</td>"
+                    + "          <td style='padding: 8px 0; text-align: right; font-weight: bold; color: #2E86C1;'>" + booking.getUniqueId() + "</td>"
+                    + "        </tr>"
+                    + "        <tr>"
+                    + "          <td style='padding: 8px 0; color: #888;'>Room / Category:</td>"
+                    + "          <td style='padding: 8px 0; text-align: right;'>" + booking.getRoomId() + " (" + booking.getRoomCategory() + ")</td>"
+                    + "        </tr>"
+                    + "        <tr>"
+                    + "          <td style='padding: 8px 0; color: #888;'>Check-in Date:</td>"
+                    + "          <td style='padding: 8px 0; text-align: right;'>" + booking.getInDate() + "</td>"
+                    + "        </tr>"
+                    + "        <tr>"
+                    + "          <td style='padding: 8px 0; color: #888;'>Check-out Date:</td>"
+                    + "          <td style='padding: 8px 0; text-align: right;'>" + booking.getOutDate() + "</td>"
+                    + "        </tr>"
+                    + "        <tr>"
+                    + "          <td style='padding: 8px 0; color: #888;'>Duration:</td>"
+                    + "          <td style='padding: 8px 0; text-align: right;'>" + booking.getNoOfDays() + " Night(s)</td>"
+                    + "        </tr>"
+                    + "      </table>"
+                    + "    </div>"
+                    + ""
+                    + "    <div style='margin-top: 20px; background-color: #f9f9f9; padding: 20px; border-radius: 5px;'>"
+                    + "      <h3 style='margin: 0 0 10px; font-size: 14px; color: #333; text-transform: uppercase;'>Payment Summary</h3>"
+                    + "      <table style='width: 100%;'>"
+                    + "        <tr>"
+                    + "          <td style='color: #666;'>Method: " + booking.getPaymentMethod().toUpperCase() + "</td>"
+                    + "          <td style='text-align: right; font-size: 18px; font-weight: bold; color: #333;'>LKR " + String.format("%.2f", booking.getPrice()) + "</td>"
+                    + "        </tr>"
+                    + "        <tr>"
+                    + "          <td colspan='2' style='font-size: 11px; color: #999; padding-top: 5px;'>Transaction ID: " + booking.getPaymentUniqueId() + "</td>"
+                    + "        </tr>"
+                    + "      </table>"
+                    + "    </div>"
+                    + ""
+                    + "    <div style='margin-top: 30px; text-align: center;'>"
+                    + "      <p style='font-size: 14px; color: #888;'>Need help? Reply to this email or call our support.</p>"
+                    + "    </div>"
+                    + "  </div>"
+                    + "  <div style='background-color: #f4f4f4; padding: 20px; text-align: center; color: #999; font-size: 12px;'>"
+                    + "    © 2024 Ocean View Hotel. All rights reserved.<br>"
+                    + "    123 Coastal Road, Seaside City"
+                    + "  </div>"
+                    + "</div>";
+
+            String setSubject = "Booking Confirmation";
+            sendHtmlEmail(toEmail, subject, content, setSubject);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to send Confirmation Email: " + e.getMessage());
         }
     }
 
@@ -187,13 +258,13 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
-    private void sendHtmlEmail(String toEmail, String subject, String htmlContent)
+    private void sendHtmlEmail(String toEmail, String subject, String htmlContent,String setSubject)
     {
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail, "Ocean View Reset Password"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-            message.setSubject("Password Reset Link ");
+            message.setSubject(setSubject);
 
             // FIX: Use setContent() instead of setText() for HTML emails
             message.setContent(htmlContent, "text/html; charset=utf-8");
@@ -209,8 +280,5 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-    @Override
-    public void sendBookingConfirmation(String toEmail, Booking booking) {
 
-    }
 }

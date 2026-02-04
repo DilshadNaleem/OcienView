@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.Ocean_View.Customer.Entity.Booking;
+import org.Ocean_View.Customer.Services.Implementations.EmailServiceImpl;
 import org.Ocean_View.Customer.Services.Implementations.ReservationsImpl;
+import org.Ocean_View.Customer.Services.Interfaces.EmailService;
 import org.Ocean_View.Customer.Services.Interfaces.Reservations;
 import org.Ocean_View.Customer.Services.PaymentUniqueID;
 import org.Ocean_View.Customer.Services.ReservationUniqueID;
@@ -22,9 +24,11 @@ import java.util.UUID;
 @WebServlet("/Customer/ProcessBooking")
 public class ProcessBookingServlet extends HttpServlet {
     private Reservations reservations;
+    private EmailService emailService;
 
     public ProcessBookingServlet() {
         this.reservations = new ReservationsImpl();
+        this.emailService = new EmailServiceImpl();
     }
 
     @Override
@@ -90,6 +94,8 @@ public class ProcessBookingServlet extends HttpServlet {
 
             // 6. Call the Service Layer
             String result = reservations.saveReservations(booking);
+            emailService.sendBookingConfirmation(email,booking);
+
 
             // 7. Handle Response
             if ("Reservation Successful".equals(result)) {
