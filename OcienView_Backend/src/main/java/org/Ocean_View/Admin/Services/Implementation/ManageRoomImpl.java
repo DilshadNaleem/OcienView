@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManageRoomImpl implements ManageRoom
 {
@@ -78,5 +80,91 @@ public class ManageRoomImpl implements ManageRoom
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public List<Room> getAllRooms() {
+        List<Room> roomList = new ArrayList<>();
+
+        String sql = "SELECT * FROM rooms";
+
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery())
+        {
+            while (rs.next())
+            {
+                Room room = new Room();
+                room.setUniqueId(rs.getString("uniqueID"));
+                room.setDescription(rs.getString("description"));
+                room.setNoOfPeople(rs.getString("noOfPeople"));
+                room.setFacilities(rs.getString("facilities"));
+                room.setFine(rs.getString("fine"));
+                room.setRules(rs.getString("rules"));
+                room.setRoomCategoryId(rs.getString("roomCategoryID"));
+                room.setRoomType(rs.getString("roomType"));
+                room.setPrice(rs.getString("price"));
+                room.setRoomStatus(rs.getString("status"));
+
+                roomList.add(room);
+            }
+        }
+
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return roomList;
+    }
+
+    @Override
+    public boolean updateRoom(Room room) {
+        String sql = "UPDATE rooms SET roomCategoryID=?, roomType=?, status=?, noOfPeople=?, " +
+                "price=?, fine=?, description=?, facilities=?, rules=? WHERE uniqueID=?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, room.getRoomCategoryId());
+            ps.setString(2, room.getRoomType());
+            ps.setString(3, room.getRoomStatus());
+            ps.setString(4, room.getNoOfPeople());
+            ps.setString(5, room.getPrice());
+            ps.setString(6, room.getFine());
+            ps.setString(7, room.getDescription());
+            ps.setString(8, room.getFacilities());
+            ps.setString(9, room.getRules());
+            ps.setString(10, room.getUniqueId());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean getRoomById(String id) {
+        String sql = "DELETE FROM rooms WHERE uniqueID = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, id);
+
+            // 2. Use executeUpdate() for DELETE/UPDATE/INSERT
+            int rowsAffected = ps.executeUpdate();
+
+            // 3. If rowsAffected > 0, the record was successfully deleted
+            if (rowsAffected > 0) {
+                System.out.println("ManageRoomTypeImpl Deleted: " + id);
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

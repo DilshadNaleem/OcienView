@@ -8,6 +8,8 @@ import org.Ocean_View.Customer.Services.Interfaces.HistoryService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,11 @@ public class HistoryServiceImpl implements HistoryService {
     @Override
     public List<Booking> fetchHistoryByEmail(String email, HttpSession session) {
         List<Booking> historyList = new ArrayList<>();
-        String sql = "SELECT * FROM reservations WHERE customerEmail = ?";
+
+        // Modified SQL to get roomId from reservations
+        String sql = "SELECT r.*, rooms.fine AS room_daily_fine FROM reservations r " +
+                "LEFT JOIN rooms ON r.roomId = rooms.uniqueId " +
+                "WHERE r.customerEmail = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -37,7 +43,17 @@ public class HistoryServiceImpl implements HistoryService {
                     booking.setPaymentUniqueId(rs.getString("paymentUniqueId"));
                     booking.setPaymentMethod(rs.getString("paymentMethod"));
                     booking.setFine(rs.getString("fine"));
-                    // Add other fields as necessary based on your DB columns
+                    booking.setRoomId(rs.getString("roomId"));
+
+                    // Get daily fine rate from rooms table
+                    double dailyFine = rs.getDouble("room_daily_fine");
+                    booking.setDailyFine(dailyFine);
+
+                    // Calculate overdue days and fine for completed bookings
+                    if ("Completed".equalsIgnoreCase(booking.getBookingStatus())) {
+                        calculateOverdueFine(booking);
+                    }
+
                     historyList.add(booking);
                 }
             }
@@ -45,5 +61,64 @@ public class HistoryServiceImpl implements HistoryService {
             e.printStackTrace();
         }
         return historyList;
+    }
+
+    private void calculateOverdueFine(Booking booking) {
+        if (booking.getOutDate() == null) {
+            return;
+        }
+
+        try {
+            LocalDate checkoutDate;
+            Object outDateObj = booking.getOutDate();
+
+            // Handle different date types
+            if (outDateObj instanceof java.sql.Date) {
+                checkoutDate = ((java.sql.Date) outDateObj).toLocalDate();
+            } else if (outDateObj instanceof java.util.Date) {
+                // Convert java.util.Date to LocalDate
+                checkoutDate = ((java.util.Date) outDateObj).toInstant()
+                        .atZone(java.time.ZoneId.systemDefault())
+                        .toLocalDate();
+            } else if (outDateObj instanceof LocalDate) {
+                // If it's already LocalDate
+                checkoutDate = (LocalDate) outDateObj;
+            } else if (outDateObj instanceof String) {
+                // If it's stored as String
+                checkoutDate = LocalDate.parse((String) outDateObj);
+            } else {
+                System.out.println("Unknown date type: " + outDateObj.getClass().getName());
+                return;
+            }
+
+            LocalDate today = LocalDate.now();
+
+            // Calculate days between checkout date and today
+            if (today.isAfter(checkoutDate)) {
+                long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(checkoutDate, today);
+
+                if (daysBetween > 0 && booking.getDailyFine() != null && booking.getDailyFine() > 0) {
+                    int overdueDays = (int) daysBetween;
+                    double calculatedFine = overdueDays * booking.getDailyFine();
+
+                    booking.setOverdueDays(overdueDays);
+                    booking.setCalculatedFine(calculatedFine);
+
+                    // Update fine
+                    double totalFine = calculatedFine;
+                    if (booking.getFine() != null && !booking.getFine().isEmpty()) {
+                        try {
+                            totalFine += Double.parseDouble(booking.getFine());
+                        } catch (NumberFormatException e) {
+                            // Ignore parsing error
+                        }
+                    }
+                    booking.setFine(String.format("%.2f", totalFine));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error calculating fine for booking: " + booking.getUniqueId());
+        }
     }
 }

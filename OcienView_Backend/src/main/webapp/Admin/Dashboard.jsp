@@ -183,8 +183,8 @@
       <li><a href="/Admin/Dashboard.jsp"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
       <li><a href="#" class="submenu-toggle"><i class="glyphicon glyphicon-user"></i> User Management</a>
         <ul class="nav submenu">
-          <li><a href="/Mega_City/ManageStaffServlet">Manage Staff</a></li>
-          <li><a href="/Mega_City/ManageCustomerServlet">Manage Customer</a></li>
+
+          <li><a href="/Admin/ManageCustomers">Manage Customer</a></li>
 
         </ul>
       </li>
@@ -195,26 +195,19 @@
       </li>
       <li><a href="#" class="submenu-toggle"><i class="glyphicon glyphicon-th-large"></i> Products</a>
         <ul class="nav submenu">
-          <li><a href="/Mega_City/VehicleManageServlet">Manage Vehicles</a></li>
+          <li><a href="/Admin/AddNewRoomTypes.html">Manage Room Types</a></li>
 
         </ul>
 
       <li>
-    <a href="/Mega_City/ManageTripServlet" class="submenu-toggle">
+    <a href="/Admin/ViewAllBookings" class="submenu-toggle">
         <i class="glyphicon glyphicon-list-alt"></i> View All Bookings
     </a>
 
-</li>
-
-    <li><a href="#" class="submenu-toggle"><i class="glyphicon glyphicon-list-alt"></i> Requests</a>
-    <ul class="submenu">
-      <li><a href="/Mega_City/ManageRequestDriverServlet">Request for Driver</a></li>
-
-    </ul>
-    </li>
 
 
-      <li><a href="/Mega_City/Admin/Admin_Login.html" class="submenu-toggle"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+      <li><a href="/Admin/Signing.jsp" class="submenu-toggle"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
 
 
     </ul>
@@ -223,15 +216,15 @@
   <div class="page">
   <div class="container-fluid">
 
-    <a href="/Mega_City/AdminEditProfileServlet" class="card">
-      <i class="glyphicon glyphicon-user"></i>  Users
+    <a href="/Admin/EditProfile" class="card">
+      <i class="glyphicon glyphicon-user"></i>  Edit Profile
     </a>
 
-    <a href="/Mega_City/Admin/Add_VehicleTypes.html" class="card">
-      <i class="glyphicon glyphicon-shopping-cart"></i>  Manage Vehicle Types
+    <a href="/Admin/AddNewRoomTypes.html" class="card">
+      <i class="glyphicon glyphicon-shopping-cart"></i>  Manage Room Types
     </a>
-    <a href="/Mega_City/VehicleManageServlet" class="card">
-      <i class="glyphicon glyphicon-th"></i>  Manage Vehicles
+    <a href="/Admin/AddRoom.jsp" class="card">
+      <i class="glyphicon glyphicon-th"></i>  Manage Rooms
     </a>
 
   </div>

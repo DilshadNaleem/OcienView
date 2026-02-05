@@ -22,6 +22,33 @@ public class Booking
     private String roomId;
     private String roomCategory;
     private String bookingStatus;
+    private Double dailyFine;
+    private Integer overdueDays;
+    private Double calculatedFine;
+
+    public Double getDailyFine() {
+        return dailyFine;
+    }
+
+    public void setDailyFine(Double dailyFine) {
+        this.dailyFine = dailyFine;
+    }
+
+    public Integer getOverdueDays() {
+        return overdueDays;
+    }
+
+    public void setOverdueDays(Integer overdueDays) {
+        this.overdueDays = overdueDays;
+    }
+
+    public Double getCalculatedFine() {
+        return calculatedFine;
+    }
+
+    public void setCalculatedFine(Double calculatedFine) {
+        this.calculatedFine = calculatedFine;
+    }
 
     public String getUniqueId() {
         return uniqueId;

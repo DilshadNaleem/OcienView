@@ -330,7 +330,7 @@
             </div>
         </form>
 
-        <a href="/Mega_City/VehicleRetrieveServlet">
+        <a href="/Admin/ManageRooms">
             <i class="fas fa-eye"></i> View Added Rooms
         </a>
     </div>
