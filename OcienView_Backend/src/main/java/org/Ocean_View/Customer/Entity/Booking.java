@@ -25,6 +25,15 @@ public class Booking
     private Double dailyFine;
     private Integer overdueDays;
     private Double calculatedFine;
+    private String savedFine;
+
+    public String getSavedFine() {
+        return savedFine;
+    }
+
+    public void setSavedFine(String savedFine) {
+        this.savedFine = savedFine;
+    }
 
     public Double getDailyFine() {
         return dailyFine;

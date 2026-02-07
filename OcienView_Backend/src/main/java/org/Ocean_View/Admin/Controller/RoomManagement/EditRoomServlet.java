@@ -1,4 +1,4 @@
-package org.Ocean_View.Admin.Controller;
+package org.Ocean_View.Admin.Controller.RoomManagement;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

@@ -262,7 +262,7 @@ public class EmailServiceImpl implements EmailService {
     {
         try {
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(fromEmail, "Ocean View Reset Password"));
+            message.setFrom(new InternetAddress(fromEmail, subject));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
             message.setSubject(setSubject);
 

@@ -1,30 +1,33 @@
-package org.Ocean_View.Admin.Controller;
+package org.Ocean_View.Admin.Controller.RoomTypesManagement;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.Ocean_View.Admin.Services.Implementation.ManageRoomImpl;
-import org.Ocean_View.Admin.Services.Interfaces.ManageRoom;
+import org.Ocean_View.Admin.Services.FileUploader;
+import org.Ocean_View.Admin.Services.Implementation.ManageRoomTypeImpl;
+import org.Ocean_View.Admin.Services.Interfaces.ManageRoomType;
 
 import java.io.IOException;
 
-@WebServlet("/Admin/DeleteRoom")
-public class DeleteRoomServlet extends HttpServlet
+@WebServlet("/Admin/DeleteRoomType")
+public class DeleteRoomTypeServlet  extends HttpServlet
 {
-    private ManageRoom manageRoom;
+    private ManageRoomType manageRoomType;
 
     @Override
     public void init() throws ServletException {
-        manageRoom = new ManageRoomImpl();
+        FileUploader fileUploader = new FileUploader();
+        manageRoomType = new ManageRoomTypeImpl(fileUploader);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String uniqueId = req.getParameter("uniqueId");
 
-        boolean isDeleted = manageRoom.getRoomById(uniqueId);
+          boolean isDeleted = manageRoomType.getRoomTypeById(uniqueId);
 
         if(isDeleted)
         {
@@ -34,6 +37,6 @@ public class DeleteRoomServlet extends HttpServlet
             req.getSession().setAttribute("errorMessage", "Failed to delete room type.");
         }
 
-        resp.sendRedirect(req.getContextPath() + "/Admin/ManageRooms");
+        resp.sendRedirect(req.getContextPath() + "/Admin/ManageRoomTypes");
     }
 }

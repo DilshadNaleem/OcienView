@@ -188,14 +188,14 @@
 
         </ul>
       </li>
-      <li><a href="/Mega_City/ManageVehicleTypesServlet"><i class="glyphicon glyphicon-indent-left"></i> Manage Categories</a>
+      <li><a href="/Admin/ManageRoomTypes"><i class="glyphicon glyphicon-indent-left"></i> Manage Rooms</a>
       <ul class="nav submenu">
-        <li><a href="/Admin/AddNewRoomTypes.html">Add Categories</a></li>
+        <li><a href="/Admin/AddNewRoomTypes.html">Add Rooms</a></li>
       </ul>
       </li>
-      <li><a href="#" class="submenu-toggle"><i class="glyphicon glyphicon-th-large"></i> Products</a>
+      <li><a href="/Admin/ManageRoomTypes" class="submenu-toggle"><i class="glyphicon glyphicon-th-large"></i> Room Types</a>
         <ul class="nav submenu">
-          <li><a href="/Admin/AddNewRoomTypes.html">Manage Room Types</a></li>
+          <li><a href="/Admin/AddNewRoomTypes.html">Add Room Types</a></li>
 
         </ul>
 

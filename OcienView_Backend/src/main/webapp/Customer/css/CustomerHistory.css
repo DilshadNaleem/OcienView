@@ -1,0 +1,371 @@
+:root {
+            --light-blue-1: rgb(214, 235, 239);
+            --light-blue-2: rgb(232, 244, 246);
+            --medium-blue: rgb(106, 160, 171);
+            --darker-blue: rgb(90, 130, 140);
+            --font-color: #1e4d50;
+            --button-color: #0073bb;
+            --button-hover-color: #5196c1;
+            --border-radius: 15px;
+            --fine-color: #dc2626;
+            --warning-color: #f59e0b;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--light-blue-1), var(--light-blue-2), var(--medium-blue), var(--darker-blue));
+            background-size: 400% 400%;
+            background-attachment: fixed;
+            animation: gradientAnimation 12s ease infinite;
+            color: var(--font-color);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Search & Filter Section */
+        .controls-container {
+            max-width: 1300px;
+            margin: 40px auto 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .search-box {
+            flex: 2;
+            min-width: 50px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 80%;
+            padding: 12px 40px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-blue);
+        }
+
+        .filter-select {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+            background: white;
+            color: var(--font-color);
+            cursor: pointer;
+        }
+
+        /* Grid */
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Enhanced Card */
+        .booking-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .booking-card:hover { transform: translateY(-5px); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .room-info h3 {
+            color: var(--darker-blue);
+            margin: 0;
+            margin-bottom: 5px;
+        }
+
+        .room-id {
+            font-size: 0.9rem;
+            color: var(--medium-blue);
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .room-info small {
+            color: #666;
+            font-size: 0.8rem;
+            display: block;
+            margin-top: 3px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .data-item label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--medium-blue);
+            font-weight: 700;
+        }
+
+        .data-item span {
+            font-size: 0.95rem;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .payment-info {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: auto;
+            border-left: 4px solid var(--button-color);
+        }
+
+        .status-pill {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .confirmed { background: #dcfce7; color: #166534; }
+        .pending { background: #fef9c3; color: #854d0e; }
+        .completed { background: #dbeafe; color: #1e40af; }
+        .cancelled { background: #fee2e2; color: #991b1b; }
+
+        .fine-badge {
+            display: inline-block;
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--fine-color);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 5px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .overdue-section {
+            background: rgba(220, 38, 38, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 3px solid var(--fine-color);
+        }
+
+        .overdue-section label {
+            color: var(--fine-color);
+        }
+
+        .overdue-section span {
+            color: var(--fine-color);
+            font-weight: 700;
+        }
+
+        .fine-breakdown {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            color: var(--darker-blue);
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--medium-blue);
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--font-color);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .fine-summary {
+            background: rgba(220, 38, 38, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid var(--fine-color);
+        }
+
+        .fine-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+
+        .fine-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--fine-color);
+            border-top: 2px solid var(--fine-color);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .pay-button {
+            background: var(--button-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .pay-button:hover {
+            background: var(--button-hover-color);
+        }
+
+        .pay-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pay-overdue-btn {
+            background: var(--fine-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .pay-overdue-btn:hover {
+            background: #b91c1c;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .payment-method-option {
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method-option:hover {
+            border-color: var(--medium-blue);
+        }
+
+        .payment-method-option.selected {
+            border-color: var(--button-color);
+            background: rgba(0, 115, 187, 0.05);
+        }
+
+        .payment-method-option i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--medium-blue);
+        }
+
+        @media (max-width: 768px) {
+            .controls-container { flex-direction: column; }
+            .history-grid { grid-template-columns: 1fr; }
+            .payment-methods { grid-template-columns: 1fr; }
+        }
