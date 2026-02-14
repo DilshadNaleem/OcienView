@@ -257,8 +257,6 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-
-
     private void sendHtmlEmail(String toEmail, String subject, String htmlContent,String setSubject)
     {
         try {
