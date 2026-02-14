@@ -208,8 +208,7 @@
     </div>
     <select class="filter-select" id="statusFilter" onchange="filterHistory()">
         <option value="all">All Statuses</option>
-        <option value="confirmed">Confirmed</option>
-        <option value="pending">Pending</option>
+        <option value="booked">Pending</option>
         <option value="completed">Completed</option>
         <option value="cancelled">Cancelled</option>
     </select>
@@ -239,7 +238,7 @@
                             <small>Booking ID: #${booking.uniqueId}</small>
 
                             <!-- Show overdue badge -->
-                            <c:if test="${booking.overdueDays != null && booking.overdueDays > 0}">
+                            <c:if test="${booking.overdueDays != null && booking.overdueDays > 0 && booking.bookingStatus != 'Completed'}">
                                 <div class="fine-badge">
                                     <i class="fas fa-clock"></i> Overdue: ${booking.overdueDays} day(s)
                                 </div>
@@ -347,46 +346,70 @@
                             </c:if>
                         </div>
 
-                        <!-- Show existing fine information -->
-                        <c:if test="${not empty booking.fine && booking.fine != '0' && booking.fine != '0.0'}">
-                            <fmt:parseNumber var="fineValue" value="${booking.fine}" type="number" />
-                            <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(0,0,0,0.1);">
-                                <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
-                                    <span style="color: #666;">Existing Fine:</span>
-                                    <span style="color: var(--fine-color); font-weight: 600;">
-                                        <fmt:formatNumber value="${booking.savedFine}" type="currency" currencyCode="LKR" />
-                                    </span>
-                                </div>
-                            </div>
-                        </c:if>
+                      <!-- Prepare fine amount based on status -->
+                      <c:set var="fineToDisplay" value="${booking.calculatedFine}" />
+                      <c:if test="${booking.bookingStatus == 'Completed'}">
+                          <c:set var="fineToDisplay" value="${booking.fine}" />
+                      </c:if>
+
+                      <!-- Show existing fine information -->
+                      <c:if test="${not empty fineToDisplay && (fineToDisplay + 0) > 0}">
+                          <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(0,0,0,0.1);">
+                              <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                                  <span style="color: #666;">
+                                      <c:choose>
+                                          <c:when test="${booking.bookingStatus == 'Completed'}">Paid Fine:</c:when>
+                                          <c:otherwise>Calculated Fine:</c:otherwise>
+                                      </c:choose>
+                                  </span>
+                                  <span style="color: var(--fine-color); font-weight: 600;">
+                                      <fmt:formatNumber value="${fineToDisplay}" type="currency" currencyCode="LKR" />
+                                  </span>
+                              </div>
+                          </div>
+                      </c:if>
 
                         <!-- Cancel Button - Hidden for:
                              1. Completed/Cancelled status
                              2. If inDate is less than 7 days from today
                              3. If outDate has already passed -->
-                        <c:if test="${booking.bookingStatus != 'Completed' && booking.bookingStatus != 'Cancelled'}">
-                            <c:set var="now" value="<%= new java.util.Date() %>" />
-                            <fmt:parseDate value="${booking.inDate}" pattern="yyyy-MM-dd" var="parsedInDate" />
-                            <fmt:parseDate value="${booking.outDate}" pattern="yyyy-MM-dd" var="parsedOutDate" />
 
-                            <c:set var="oneWeekFromNow" value="<%= new java.util.Date(new java.util.Date().getTime() + 7 * 24 * 60 * 60 * 1000) %>" />
+                       <!-- Cancel Button and Complete Booking Button -->
+                       <c:if test="${booking.bookingStatus != 'Completed' && booking.bookingStatus != 'Cancelled'}">
+                           <c:set var="now" value="<%= new java.util.Date() %>" />
+                           <fmt:parseDate value="${booking.inDate}" pattern="yyyy-MM-dd" var="parsedInDate" />
+                           <fmt:parseDate value="${booking.outDate}" pattern="yyyy-MM-dd" var="parsedOutDate" />
 
-                            <!-- Check conditions:
-                                 1. inDate should be MORE than 1 week away (parsedInDate > oneWeekFromNow)
-                                 2. outDate should be in the FUTURE (parsedOutDate > now) -->
-                            <c:if test="${parsedInDate.time > oneWeekFromNow.time && parsedOutDate.time > now.time}">
-                                <div style="margin-top: 15px; display: flex; justify-content: flex-end;">
-                                    <button class="cancel-btn"
-                                            onclick="openCancelModal(
-                                                '${booking.uniqueId}',
-                                                '${booking.roomId}',
-                                                '${booking.customerEmail}'
-                                            )">
-                                        <i class="fas fa-times-circle"></i> Cancel Booking
-                                    </button>
-                                </div>
-                            </c:if>
-                        </c:if>
+                           <c:set var="oneWeekFromNow" value="<%= new java.util.Date(new java.util.Date().getTime() + 7 * 24 * 60 * 60 * 1000) %>" />
+
+                           <!-- Format dates for comparison -->
+                           <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="todayStr" />
+                           <fmt:formatDate value="${parsedOutDate}" pattern="yyyy-MM-dd" var="outDateStr" />
+
+                           <div style="margin-top: 15px; display: flex; justify-content: flex-end; gap: 10px;">
+                               <!-- Complete Booking Button - Show only on checkout day -->
+                               <c:if test="${todayStr == outDateStr}">
+                                   <form action="${pageContext.request.contextPath}/Customer/SuccessRooms" method="post" style="margin: 0;">
+                                       <input type="hidden" name="uniqueId" value="${booking.uniqueId}" />
+                                       <button type="submit" class="complete-btn">
+                                           <i class="fas fa-check-circle"></i> Complete Booking
+                                       </button>
+                                   </form>
+                               </c:if>
+
+                               <!-- Cancel Button - Show only if inDate > 1 week away and outDate is in future -->
+                               <c:if test="${parsedInDate.time > oneWeekFromNow.time && parsedOutDate.time > now.time}">
+                                   <button class="cancel-btn"
+                                           onclick="openCancelModal(
+                                               '${booking.uniqueId}',
+                                               '${booking.roomId}',
+                                               '${booking.customerEmail}'
+                                           )">
+                                       <i class="fas fa-times-circle"></i> Cancel Booking
+                                   </button>
+                               </c:if>
+                           </div>
+                       </c:if>
                     </div>
                 </div>
             </c:forEach>

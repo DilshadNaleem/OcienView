@@ -37,10 +37,8 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService
             conn = DatabaseConnection.getConnection();
             conn.setAutoCommit(false); // Start transaction
 
-            // Generate unique ID
             String uniqueId = idGenerator.generateCustomerUniqueId();
 
-            // Insert into customers table
             String sql = "INSERT INTO admin (unique_id, firstName, lastName, email, password, nic, contactNumber, status, created_at,image_path) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 

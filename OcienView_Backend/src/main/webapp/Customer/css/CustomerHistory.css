@@ -28,6 +28,7 @@
             padding: 20px;
         }
 
+
         /* Search & Filter Section */
         .controls-container {
             max-width: 1300px;
@@ -369,3 +370,88 @@
             .history-grid { grid-template-columns: 1fr; }
             .payment-methods { grid-template-columns: 1fr; }
         }
+
+        /* Basic button styling */
+        .complete-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 180px;
+        }
+
+        /* Hover effect */
+        .complete-btn:hover {
+            background: linear-gradient(135deg, #45a049 0%, #1B5E20 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Active/Click effect */
+        .complete-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Focus state for accessibility */
+        .complete-btn:focus {
+            outline: 3px solid rgba(76, 175, 80, 0.4);
+            outline-offset: 2px;
+        }
+
+        /* Disabled state (optional, if you add disabled attribute) */
+        .complete-btn:disabled {
+            background: linear-gradient(135deg, #cccccc 0%, #999999 100%);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Icon styling */
+        .complete-btn i {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Icon animation on hover */
+        .complete-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .complete-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+                min-width: 160px;
+            }
+
+            .complete-btn i {
+                font-size: 14px;
+            }
+        }
+
+        /* Optional: Add a pulse animation for attention */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
+        }
+
+

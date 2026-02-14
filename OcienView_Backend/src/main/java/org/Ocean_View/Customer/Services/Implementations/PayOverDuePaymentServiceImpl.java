@@ -12,15 +12,8 @@ public class PayOverDuePaymentServiceImpl implements PayOverDuePaymentService {
 
     @Override
     public String getOverDuePaymentService(PayOverDuePaymentDTO payOverDuePaymentDTO) {
-        System.out.println("=== STARTING PAY OVERDUE PAYMENT SERVICE ===");
-        System.out.println("Input DTO: " + payOverDuePaymentDTO);
-        System.out.println("Unique ID: " + payOverDuePaymentDTO.getUniqueId());
-        System.out.println("Overdue Days: " + payOverDuePaymentDTO.getOverdueDays());
-        System.out.println("Calculated Fine: " + payOverDuePaymentDTO.getCalculatedFine());
 
-        // Step 1: SQL to get existing days
         String selectSql = "SELECT noOfDays, fine, bookingStatus FROM reservations WHERE uniqueId = ?";
-        // Step 2: SQL to update record
         String updateSql = "UPDATE reservations SET fine = ?, noOfDays = ?, bookingStatus = ? WHERE uniqueId = ?";
 
         try (Connection conn = DatabaseConnection.getConnection()) {
@@ -30,11 +23,6 @@ public class PayOverDuePaymentServiceImpl implements PayOverDuePaymentService {
             int currentDays = 0;
             double currentFine = 0;
             String currentStatus = "";
-
-            // Fetch current days
-            System.out.println("\n=== FETCHING EXISTING RECORD ===");
-            System.out.println("Executing SELECT query: " + selectSql);
-            System.out.println("With uniqueId: " + payOverDuePaymentDTO.getUniqueId());
 
             try (PreparedStatement psSelect = conn.prepareStatement(selectSql)) {
                 psSelect.setString(1, payOverDuePaymentDTO.getUniqueId());
@@ -72,20 +60,6 @@ public class PayOverDuePaymentServiceImpl implements PayOverDuePaymentService {
             int updatedTotalDays = currentDays + payOverDuePaymentDTO.getOverdueDays();
             double newFine = payOverDuePaymentDTO.getCalculatedFine();
 
-            System.out.println("Current days: " + currentDays);
-            System.out.println("Overdue days to add: " + payOverDuePaymentDTO.getOverdueDays());
-            System.out.println("Updated total days: " + updatedTotalDays);
-            System.out.println("New fine amount: " + newFine);
-            System.out.println("Setting bookingStatus to: Completed");
-
-            // Perform the update
-            System.out.println("\n=== PERFORMING UPDATE ===");
-            System.out.println("Executing UPDATE query: " + updateSql);
-            System.out.println("Update parameters:");
-            System.out.println("  fine = " + newFine);
-            System.out.println("  noOfDays = " + updatedTotalDays);
-            System.out.println("  bookingStatus = Completed");
-            System.out.println("  uniqueId = " + payOverDuePaymentDTO.getUniqueId());
 
             try (PreparedStatement psUpdate = conn.prepareStatement(updateSql)) {
                 psUpdate.setDouble(1, newFine);
@@ -93,11 +67,7 @@ public class PayOverDuePaymentServiceImpl implements PayOverDuePaymentService {
                 psUpdate.setString(3, "Completed");
                 psUpdate.setString(4, payOverDuePaymentDTO.getUniqueId());
 
-                System.out.println("All parameters set for UPDATE");
-                System.out.println("Executing update...");
-
                 int rowsAffected = psUpdate.executeUpdate();
-                System.out.println("UPDATE executed, rows affected: " + rowsAffected);
 
                 // Verify the update by selecting the record again
                 if (rowsAffected > 0) {

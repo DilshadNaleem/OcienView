@@ -46,8 +46,7 @@ public class RegistrationServiceFactory
             case "CUSTOMER":
                 return new CustomerRegistrationServiceImpl();
             case "ADMIN":
-                // Cast AdminRegistrationService to RegistrationService
-                // Since AdminRegistrationService extends RegistrationService, this is safe
+
                 return (RegistrationService) new AdminRegistrationServiceImpl();
             default:
                 throw new IllegalArgumentException("Unknown service type: " + type);

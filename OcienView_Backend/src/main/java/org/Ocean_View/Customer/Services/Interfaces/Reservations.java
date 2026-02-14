@@ -8,5 +8,6 @@ public interface Reservations
     String saveReservations( Booking booking);
     String getLastUniqueId();
     String getPaymentLastUniqueId();
+    String updateSuccessStatusForSuccess(String uniqueId);
 
 }

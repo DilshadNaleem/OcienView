@@ -23,8 +23,8 @@ public class ReservationsImpl implements Reservations {
         String bookingSQL = "INSERT INTO reservations " +
                 "(uniqueId, customerEmail, customerFirstName, customerLastName, phoneNumber, " +
                 "fine, inDate, outDate, price, noOfDays, paymentUniqueId, paymentMethod, " +
-                "roomId, roomCategory, bookingStatus, bookingDate) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
+                "roomId, roomCategory, bookingStatus, bookingDate, paidFine) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),?)";
 
         // CHANGED: From UPDATE to INSERT
         String paymentInsertSQL = "INSERT INTO payment (uniqueId, paymentMethod, amount, status, " +
@@ -68,6 +68,7 @@ public class ReservationsImpl implements Reservations {
                 psBooking.setString(13, booking.getRoomId());
                 psBooking.setString(14, booking.getRoomCategory());
                 psBooking.setString(15, "Booked");
+                psBooking.setDouble(16, 0.0);
 
                 // --- Set Payment Values (The New Insert) ---
                 psPayment.setString(1, booking.getPaymentUniqueId());
@@ -161,5 +162,34 @@ public class ReservationsImpl implements Reservations {
             e.printStackTrace();
         }
         return bookedDates;
+    }
+
+    @Override
+    public String updateSuccessStatusForSuccess(String uniqueId)
+    {
+        String sql = "UPDATE reservations SET bookingStatus = ? WHERE uniqueId = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql))
+        {
+            ps.setString(1, "Completed");
+            ps.setString(2, uniqueId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0)
+            {
+                return "Successfully Updated";
+            } else
+            {
+                return "No Reservations found";
+            }
+
+        }
+
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return "Error Updating";
     }
 }

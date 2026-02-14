@@ -190,7 +190,7 @@
       </li>
       <li><a href="/Admin/ManageRoomTypes"><i class="glyphicon glyphicon-indent-left"></i> Manage Rooms</a>
       <ul class="nav submenu">
-        <li><a href="/Admin/AddNewRoomTypes.html">Add Rooms</a></li>
+        <li><a href="/Admin/AddRoom.jsp">Add Rooms</a></li>
       </ul>
       </li>
       <li><a href="/Admin/ManageRoomTypes" class="submenu-toggle"><i class="glyphicon glyphicon-th-large"></i> Room Types</a>

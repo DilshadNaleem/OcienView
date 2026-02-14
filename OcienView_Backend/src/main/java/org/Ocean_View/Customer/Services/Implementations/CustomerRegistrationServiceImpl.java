@@ -33,9 +33,8 @@ public class CustomerRegistrationServiceImpl implements RegistrationService {
 
         try {
             conn = DatabaseConnection.getConnection();
-            conn.setAutoCommit(false); // Start transaction
+            conn.setAutoCommit(false);
 
-            // Generate unique ID
             String uniqueId = idGenerator.generateCustomerUniqueId();
 
             // Insert into customers table

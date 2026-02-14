@@ -89,7 +89,7 @@ public class HistoryServiceImpl implements HistoryService {
 
                     double totalFine = existingFine + calculatedOverdueFine;
                     // Format back to string for the DTO
-                    booking.setFine(String.format("%.2f", totalFine));
+
                 }
             }
         } catch (Exception e) {

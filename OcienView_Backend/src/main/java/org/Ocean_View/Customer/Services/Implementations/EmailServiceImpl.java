@@ -5,6 +5,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 import org.Ocean_View.Connection.DatabaseConnection;
+import org.Ocean_View.Customer.DTO.PayOverDuePaymentDTO;
 import org.Ocean_View.Customer.Entity.Booking;
 import org.Ocean_View.Customer.Services.Interfaces.EmailService;
 import org.Ocean_View.Customer.Services.Interfaces.OTPService;
@@ -280,5 +281,41 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Override
+    public void sendFineConfirmation(String toEmail, PayOverDuePaymentDTO payment)
+    {
+        try{
+            String subject = "Fine Completion - " + payment.getBookingId();
+
+            String content = "Fine has been Received " + payment.getBookingId() +
+                    "Fine " + payment.getCalculatedFine() + "roomID : " + payment.getRoomId() +
+                    "Payment Method: " + payment.getPaymentMethod();
+
+            String setSubject = "Fine Completion";
+            sendHtmlEmail(toEmail, subject, content, setSubject);
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw  new RuntimeException("Failed to send confirmation Email: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void sendCancellationEmail(String toEmail, String roomId) {
+        try {
+            String subject = "Cancellation Completion - " + roomId;
+            String content = "Completion has been Received for " + roomId +
+                             "Status : Cancelled ";
+            String setSubject = "Cancellation Completion";
+            sendHtmlEmail(toEmail, subject, content, setSubject);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+
+        }
+    }
 
 }

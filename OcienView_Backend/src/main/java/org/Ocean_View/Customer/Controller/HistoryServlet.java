@@ -17,6 +17,7 @@ import java.util.List;
 public class HistoryServlet extends HttpServlet {
     private final HistoryService historyService = new HistoryServiceImpl();
 
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

@@ -87,6 +87,7 @@ public class ProcessBookingServlet extends HttpServlet {
             booking.setPrice(Double.parseDouble(totalPriceStr));
             booking.setPaymentUniqueId(paymentId);
             booking.setPaymentMethod(paymentMethod);
+            booking.setPaidFine(0.0);
 
             // You might want to fetch these from the DB or a hidden field if available
             booking.setRoomCategory(roomCategory); // Ensure this is sent from JSP

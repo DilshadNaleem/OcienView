@@ -1,6 +1,7 @@
 package org.Ocean_View.Customer.Services.Interfaces;
 
 import jakarta.servlet.http.HttpSession;
+import org.Ocean_View.Customer.DTO.PayOverDuePaymentDTO;
 import org.Ocean_View.Customer.Entity.Booking;
 
 public interface EmailService
@@ -9,4 +10,6 @@ public interface EmailService
     boolean updateUserStatus(String email, String status);
     void sendPasswordResetEmail (String toEmail, String resetLink);
     void sendBookingConfirmation(String toEmail, Booking booking);
+    void sendFineConfirmation(String toEmail, PayOverDuePaymentDTO paymentDTO);
+    void sendCancellationEmail(String toEmail,  String roomId);
 }
