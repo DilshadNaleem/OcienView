@@ -15,10 +15,10 @@ public class CancelBookingImpls implements CancelBooking
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql))
         {
-                ps.setString(1, "Cancelled");
-                ps.setString(2, bookingId);
+            ps.setString(1, "Cancelled");
+            ps.setString(2, bookingId);
 
-                int rowsAffected = ps.executeUpdate();
+            int rowsAffected = ps.executeUpdate();
 
 
             System.out.println("Rows affected: " + rowsAffected);

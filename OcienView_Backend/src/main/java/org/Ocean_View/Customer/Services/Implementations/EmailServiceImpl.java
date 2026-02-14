@@ -287,9 +287,60 @@ public class EmailServiceImpl implements EmailService {
         try{
             String subject = "Fine Completion - " + payment.getBookingId();
 
-            String content = "Fine has been Received " + payment.getBookingId() +
-                    "Fine " + payment.getCalculatedFine() + "roomID : " + payment.getRoomId() +
-                    "Payment Method: " + payment.getPaymentMethod();
+            String content = "<html>" +
+                    "<head>" +
+                    "<meta charset='UTF-8'>" +
+                    "</head>" +
+                    "<body style='margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;'>" +
+                    "<div style='max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);'>" +
+
+                    "<!-- Header Section -->" +
+                    "<div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;'>" +
+                    "<h1 style='color: #ffffff; margin: 0; font-size: 28px; font-weight: 600;'>Payment Confirmation</h1>" +
+                    "<p style='color: #e0e0e0; margin: 10px 0 0 0; font-size: 16px;'>Fine Payment Received Successfully</p>" +
+                    "</div>" +
+
+                    "<!-- Content Section -->" +
+                    "<div style='padding: 40px 30px;'>" +
+
+                    "<!-- Booking Details -->" +
+                    "<div style='background-color: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin-bottom: 30px; border-radius: 5px;'>" +
+                    "<h3 style='color: #333333; margin: 0 0 15px 0; font-size: 18px; font-weight: 600; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;'>Booking Details</h3>" +
+
+                    "<p style='color: #555555; margin: 10px 0; font-size: 15px; line-height: 1.6;'>" +
+                    "<span style='font-weight: 600; color: #667eea; width: 140px; display: inline-block;'>Booking ID:</span> " + payment.getBookingId() + "</p>" +
+
+                    "<p style='color: #555555; margin: 10px 0; font-size: 15px; line-height: 1.6;'>" +
+                    "<span style='font-weight: 600; color: #667eea; width: 140px; display: inline-block;'>Room ID:</span> " + payment.getRoomId() + "</p>" +
+
+                    "<p style='color: #555555; margin: 10px 0; font-size: 15px; line-height: 1.6;'>" +
+                    "<span style='font-weight: 600; color: #667eea; width: 140px; display: inline-block;'>Fine Amount:</span> " +
+                    "<span style='color: #dc3545; font-weight: 600;'>₱" + payment.getCalculatedFine() + "</span></p>" +
+
+                    "<p style='color: #555555; margin: 10px 0; font-size: 15px; line-height: 1.6;'>" +
+                    "<span style='font-weight: 600; color: #667eea; width: 140px; display: inline-block;'>Payment Method:</span> " +
+                    "<span style='background-color: #e8f5e9; color: #28a745; padding: 3px 10px; border-radius: 15px; font-weight: 600;'>" + payment.getPaymentMethod() + "</span></p>" +
+                    "</div>" +
+
+                    "<!-- Status Box -->" +
+                    "<div style='text-align: center; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; padding: 20px; margin-bottom: 30px;'>" +
+                    "<p style='color: #155724; margin: 0; font-size: 16px; font-weight: 600;'>" +
+                    "✓ Your fine payment has been successfully processed</p>" +
+                    "</div>" +
+
+                    "<!-- Footer Note -->" +
+                    "<p style='color: #777777; margin: 20px 0 0 0; font-size: 14px; line-height: 1.6; text-align: center; border-top: 1px solid #e0e0e0; padding-top: 20px;'>" +
+                    "Thank you for your prompt payment. If you have any questions, please contact our support team.</p>" +
+                    "</div>" +
+
+                    "<!-- Footer Section -->" +
+                    "<div style='background-color: #f8f9fa; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; border-top: 1px solid #e0e0e0;'>" +
+                    "<p style='color: #666666; margin: 0; font-size: 13px;'>This is an automated message, please do not reply to this email.</p>" +
+                    "<p style='color: #999999; margin: 10px 0 0 0; font-size: 12px;'>&copy; 2024 Ocean View. All rights reserved.</p>" +
+                    "</div>" +
+                    "</div>" +
+                    "</body>" +
+                    "</html>";
 
             String setSubject = "Fine Completion";
             sendHtmlEmail(toEmail, subject, content, setSubject);
@@ -298,7 +349,7 @@ public class EmailServiceImpl implements EmailService {
         catch (Exception e)
         {
             e.printStackTrace();
-            throw  new RuntimeException("Failed to send confirmation Email: " + e.getMessage());
+            throw new RuntimeException("Failed to send confirmation Email: " + e.getMessage());
         }
     }
 
@@ -306,15 +357,65 @@ public class EmailServiceImpl implements EmailService {
     public void sendCancellationEmail(String toEmail, String roomId) {
         try {
             String subject = "Cancellation Completion - " + roomId;
-            String content = "Completion has been Received for " + roomId +
-                             "Status : Cancelled ";
+
+            String content = "<html>" +
+                    "<head>" +
+                    "<meta charset='UTF-8'>" +
+                    "</head>" +
+                    "<body style='margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;'>" +
+                    "<div style='max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);'>" +
+
+                    "<!-- Header Section -->" +
+                    "<div style='background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;'>" +
+                    "<h1 style='color: #ffffff; margin: 0; font-size: 28px; font-weight: 600;'>Booking Cancellation</h1>" +
+                    "<p style='color: #e0e0e0; margin: 10px 0 0 0; font-size: 16px;'>Your booking has been cancelled</p>" +
+                    "</div>" +
+
+                    "<!-- Content Section -->" +
+                    "<div style='padding: 40px 30px;'>" +
+
+                    "<!-- Cancellation Details -->" +
+                    "<div style='background-color: #f8f9fa; border-left: 4px solid #f5576c; padding: 20px; margin-bottom: 30px; border-radius: 5px;'>" +
+                    "<h3 style='color: #333333; margin: 0 0 15px 0; font-size: 18px; font-weight: 600; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;'>Cancellation Details</h3>" +
+
+                    "<p style='color: #555555; margin: 10px 0; font-size: 15px; line-height: 1.6;'>" +
+                    "<span style='font-weight: 600; color: #f5576c; width: 140px; display: inline-block;'>Room ID:</span> " + roomId + "</p>" +
+
+                    "<p style='color: #555555; margin: 10px 0; font-size: 15px; line-height: 1.6;'>" +
+                    "<span style='font-weight: 600; color: #f5576c; width: 140px; display: inline-block;'>Status:</span> " +
+                    "<span style='background-color: #f8d7da; color: #721c24; padding: 3px 10px; border-radius: 15px; font-weight: 600;'>CANCELLED</span></p>" +
+                    "</div>" +
+
+                    "<!-- Important Information Box -->" +
+                    "<div style='background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; padding: 20px; margin-bottom: 30px;'>" +
+                    "<p style='color: #856404; margin: 0 0 10px 0; font-weight: 600;'>⚠️ Important Information:</p>" +
+                    "<ul style='color: #856404; margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;'>" +
+                    "<li>Your booking has been successfully cancelled</li>" +
+                    "<li>Any applicable cancellation fees may apply</li>" +
+                    "<li>Refunds will be processed within 5-7 business days</li>" +
+                    "</ul>" +
+                    "</div>" +
+
+                    "<!-- Footer Note -->" +
+                    "<p style='color: #777777; margin: 20px 0 0 0; font-size: 14px; line-height: 1.6; text-align: center; border-top: 1px solid #e0e0e0; padding-top: 20px;'>" +
+                    "We're sorry to see you go. We hope to serve you again in the future!</p>" +
+                    "</div>" +
+
+                    "<!-- Footer Section -->" +
+                    "<div style='background-color: #f8f9fa; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; border-top: 1px solid #e0e0e0;'>" +
+                    "<p style='color: #666666; margin: 0; font-size: 13px;'>This is an automated message, please do not reply to this email.</p>" +
+                    "<p style='color: #999999; margin: 10px 0 0 0; font-size: 12px;'>&copy; 2024 Ocean View. All rights reserved.</p>" +
+                    "</div>" +
+                    "</div>" +
+                    "</body>" +
+                    "</html>";
+
             String setSubject = "Cancellation Completion";
             sendHtmlEmail(toEmail, subject, content, setSubject);
         }
         catch (Exception e)
         {
             e.printStackTrace();
-
         }
     }
 
