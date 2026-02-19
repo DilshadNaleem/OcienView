@@ -415,6 +415,12 @@
             </c:forEach>
         </c:otherwise>
     </c:choose>
+
+    <div id="noResultsMessage" style="display: none; grid-column: 1 / -1; text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.7); border-radius: var(--border-radius);">
+        <i class="fas fa-search-minus" style="font-size: 3rem; color: var(--medium-blue); margin-bottom: 20px;"></i>
+        <h3 style="color: var(--darker-blue);">No Matching Results</h3>
+        <p style="color: var(--font-color);">Try adjusting your search or filters to find what you're looking for.</p>
+    </div>
 </div>
 
 <script>
@@ -527,26 +533,36 @@
         e.target.value = value.substring(0, 5);
     });
 
-    // Filter functions
-    function filterHistory() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const status = document.getElementById('statusFilter').value.toLowerCase();
-        const cards = document.getElementsByClassName('booking-card');
+   function filterHistory() {
+       const query = document.getElementById('searchInput').value.toLowerCase();
+       const status = document.getElementById('statusFilter').value.toLowerCase();
+       const cards = document.getElementsByClassName('booking-card');
+       const noResultsMsg = document.getElementById('noResultsMessage');
 
-        for (let card of cards) {
-            const content = card.getAttribute('data-searchable').toLowerCase();
-            const cardStatus = card.getAttribute('data-status');
+       let visibleCount = 0; // Track how many cards we show
 
-            const matchesSearch = content.includes(query);
-            const matchesStatus = (status === 'all' || cardStatus === status);
+       for (let card of cards) {
+           const content = card.getAttribute('data-searchable').toLowerCase();
+           const cardStatus = card.getAttribute('data-status');
 
-            if (matchesSearch && matchesStatus) {
-                card.style.display = "flex";
-            } else {
-                card.style.display = "none";
-            }
-        }
-    }
+           const matchesSearch = content.includes(query);
+           const matchesStatus = (status === 'all' || cardStatus === status);
+
+           if (matchesSearch && matchesStatus) {
+               card.style.display = "flex";
+               visibleCount++; // Increment count
+           } else {
+               card.style.display = "none";
+           }
+       }
+
+       // Toggle the "No Results" message based on visibleCount
+       if (visibleCount === 0 && cards.length > 0) {
+           noResultsMsg.style.display = "block";
+       } else {
+           noResultsMsg.style.display = "none";
+       }
+   }
 
     // Close modal when clicking outside
     window.onclick = function(event) {

@@ -28,6 +28,7 @@ public class HistoryServlet extends HttpServlet {
         if (email != null) {
             List<Booking> bookings = historyService.fetchHistoryByEmail(email, session);
             request.setAttribute("bookingHistory", bookings);
+            System.out.println("booking first name : " + bookings.toString());
             request.getRequestDispatcher("/Customer/CustomerHistory.jsp").forward(request, response);
         } else {
             response.sendRedirect(request.getContextPath() + "/Customer/Signing.jsp");

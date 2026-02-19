@@ -5,7 +5,31 @@
   <title>Customer Login Form</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'>
   <link rel="stylesheet" href="./css/style.css">
+  <style>
+    /* Add styles for password field containers */
+    .password-container {
+      position: relative;
+      width: 100%;
+    }
 
+    .password-container input {
+      width: 100%;
+      padding-right: 40px; /* Make room for the eye icon */
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #777;
+    }
+
+    .toggle-password:hover {
+      color: #333;
+    }
+  </style>
 </head>
 <body>
 
@@ -13,7 +37,6 @@
 	<!-- Sign-Up Container -->
 	<div class="form-container sign-up-container">
 		<form id="signupForm" action="/Customer/Register" method="POST">
-                    <!-- HTML -->
 			<h1>Create Account</h1><br>
 			<div class="social-container">
 				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -24,10 +47,21 @@
 			<input type="text" id="firstName" name="firstname" placeholder="First Name" required />
 			<input type="text" id="lastName" name="lastname" placeholder="Last Name" required />
 			<input type="email" id="email" name="email" placeholder="Email" required />
-			<input type="password" id="password" name="password" placeholder="Password" required />
-			<input type="password" id="confirmPassword" name="confirmpassword" placeholder="Confirm Password" required />
+
+			<!-- Password field with eye icon -->
+			<div class="password-container">
+				<input type="password" id="password" name="password" placeholder="Password" required />
+				<i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('password', this)"></i>
+			</div>
+
+			<!-- Confirm Password field with eye icon -->
+			<div class="password-container">
+				<input type="password" id="confirmPassword" name="confirmpassword" placeholder="Confirm Password" required />
+				<i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('confirmPassword', this)"></i>
+			</div>
+
 			<input type="text" id="contactNumber" name="contact_number" placeholder="Contact Number" required />
-                        <input type="text" id="nic" name="nic" placeholder="NIC" required />
+      <input type="text" id="nic" name="nic" placeholder="NIC" required />
 			<button type="submit" name="register" value="register">Sign Up</button>
 		</form>
 	</div>
@@ -43,7 +77,13 @@
 			</div>
 			<span>or use your account</span>
 			<input type="email" id="signinEmail" name="email" placeholder="Email" required />
-			<input type="password" id="signinPassword" name="password" placeholder="Password" required />
+
+			<!-- Sign-in Password field with eye icon -->
+			<div class="password-container">
+				<input type="password" id="signinPassword" name="password" placeholder="Password" required />
+				<i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('signinPassword', this)"></i>
+			</div>
+
 			<a href="recover_psw.html">Forgot your password?</a>
 			<button type="submit">Sign In</button>
 		</form>
@@ -73,10 +113,23 @@
     </p>
 </footer>
 
-
 <!-- Scripts -->
-
 <script>
+// Function to toggle password visibility
+function togglePasswordVisibility(inputId, iconElement) {
+    const passwordInput = document.getElementById(inputId);
+
+    // Toggle input type
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        iconElement.classList.remove('fa-eye');
+        iconElement.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        iconElement.classList.remove('fa-eye-slash');
+        iconElement.classList.add('fa-eye');
+    }
+}
 
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');

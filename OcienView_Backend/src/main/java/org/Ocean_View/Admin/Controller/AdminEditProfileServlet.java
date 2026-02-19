@@ -18,6 +18,13 @@ public class AdminEditProfileServlet extends HttpServlet
 {
     private AdminAuthServiceImpl adminAuthService;
 
+    public AdminEditProfileServlet(AdminAuthServiceImpl adminAuthService)
+    {
+        this.adminAuthService = new AdminAuthServiceImpl();
+    }
+
+
+
     @Override
     public void init() throws ServletException {
         super.init();

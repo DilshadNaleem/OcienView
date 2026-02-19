@@ -50,6 +50,13 @@ public class CancelBookingsController extends HttpServlet
                 writer.println("</script>");
                 return;
             }
+            else
+            {
+                writer.println("<script type='text/javascript'>");
+                writer.println("alert('Booking not Found!');");
+                writer.println("window.location.href='" + req.getContextPath() + "/Customer/History';");
+                writer.println("</script>");
+            }
         }
         catch (Exception e)
         {

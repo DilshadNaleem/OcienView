@@ -292,3 +292,29 @@ button.ghost:hover {
     color: #fff;
     transform: scale(1.1); /* Button hover scaling */
 }
+
+/* Container to position the icon */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px; /* Space for the icon */
+}
+
+/* Positioning the eye icon */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+    z-index: 10;
+}
+
+.toggle-password:hover {
+    color: #333;
+}

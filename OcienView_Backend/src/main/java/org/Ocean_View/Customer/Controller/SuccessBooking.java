@@ -37,6 +37,7 @@ public class SuccessBooking extends HttpServlet
                 resp.sendRedirect(req.getContextPath() + "/Customer/History");
                 return;
             }
+
             else
             {
                 req.setAttribute("errorMessage", result);

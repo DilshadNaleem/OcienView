@@ -24,8 +24,15 @@
 			<input type="text" id="firstName" name="firstname" placeholder="First Name" required />
 			<input type="text" id="lastName" name="lastname" placeholder="Last Name" required />
 			<input type="email" id="email" name="email" placeholder="Email" required />
-			<input type="password" id="password" name="password" placeholder="Password" required />
-			<input type="password" id="confirmPassword" name="confirmpassword" placeholder="Confirm Password" required />
+			<div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Password" required />
+                <i class="fas fa-eye toggle-password" onclick="togglePassword('password', this)"></i>
+            </div>
+
+            <div class="password-container">
+                <input type="password" id="confirmPassword" name="confirmpassword" placeholder="Confirm Password" required />
+                <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmPassword', this)"></i>
+            </div>
 			<input type="text" id="contactNumber" name="contact_number" placeholder="Contact Number" required />
                         <input type="text" id="nic" name="nic" placeholder="NIC" required />
 			<button type="submit" name="register" value="register">Sign Up</button>
@@ -43,7 +50,10 @@
 			</div>
 			<span>or use your account</span>
 			<input type="email" id="signinEmail" name="email" placeholder="Email" required />
-			<input type="password" id="signinPassword" name="password" placeholder="Password" required />
+		<div class="password-container">
+            <input type="password" id="signinPassword" name="password" placeholder="Password" required />
+            <i class="fas fa-eye toggle-password" onclick="togglePassword('signinPassword', this)"></i>
+        </div>
 			<a href="recover_psw.html">Forgot your password?</a>
 			<button type="submit">Sign In</button>
 		</form>
@@ -138,6 +148,18 @@ document.getElementById("signupForm").addEventListener("submit", function (event
         event.preventDefault();
     }
 });
+
+function togglePassword(inputId, icon) {
+    const passwordInput = document.getElementById(inputId);
+
+    // Toggle the type attribute
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+
+    // Toggle the eye / eye-slash icon
+    icon.classList.toggle('fa-eye');
+    icon.classList.toggle('fa-eye-slash');
+}
 
 </script>
 

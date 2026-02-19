@@ -20,7 +20,7 @@ public class ForgotPasswordController extends HttpServlet
     public ForgotPasswordController()
     {
         this.emailService = new EmailServiceImpl();
-    }
+    } 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
