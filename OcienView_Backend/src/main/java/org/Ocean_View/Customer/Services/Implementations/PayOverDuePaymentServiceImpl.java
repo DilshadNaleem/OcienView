@@ -84,7 +84,7 @@ public class PayOverDuePaymentServiceImpl implements PayOverDuePaymentService {
                         }
                     }
                     System.out.println("\nSUCCESS: Payment processed and record updated!");
-                    return "SUCCESS: Payment processed successfully";
+                    return "Success";
                 } else {
                     System.out.println("WARNING: UPDATE executed but 0 rows affected!");
                     System.out.println("Possible causes:");

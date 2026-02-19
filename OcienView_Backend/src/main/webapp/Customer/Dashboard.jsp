@@ -21,7 +21,6 @@
                         <a href="#">Welcome, User</a>
                         <a href="/Customer/EditProfile">Profile</a>
                         <a href="/Customer/History">My Orders</a>
-                        <a href="/Customer/Payment" > Payments </a>
                         <a href="/Customer/Guidelines.html">Guidelines</a>
                         <a href="/Customer/Signing.jsp">Logout</a>
                     </div>
