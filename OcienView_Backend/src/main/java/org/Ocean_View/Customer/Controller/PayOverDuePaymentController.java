@@ -17,7 +17,7 @@ import java.io.IOException;
 @WebServlet("/Customer/PayOverdueFine")
 public class PayOverDuePaymentController extends HttpServlet
 {
-        private PayOverDuePaymentService payOverDuePaymentService;
+    private PayOverDuePaymentService payOverDuePaymentService;
 
     @Override
     public void init() throws ServletException {
@@ -37,8 +37,8 @@ public class PayOverDuePaymentController extends HttpServlet
 
             System.out.println("Booking Id: " + bookingId + " " + "roomId " + roomId + " " + "calculatedFine " + calculatedFine + " " + "Overdue Days: " + noOfDays);
 
-           PayOverDuePaymentDTO paymentDTO = new PayOverDuePaymentDTO();
-           paymentDTO.setUniqueId(bookingId);
+            PayOverDuePaymentDTO paymentDTO = new PayOverDuePaymentDTO();
+            paymentDTO.setUniqueId(bookingId);
             paymentDTO.setBookingId(bookingId);
             paymentDTO.setCustomerEmail(customerEmail);
             paymentDTO.setRoomId(roomId);

@@ -19,6 +19,10 @@ public class EditProfileServlet extends HttpServlet {
 
     private CustomerAuthServiceImpl customerAuthService;
 
+    public EditProfileServlet(CustomerAuthServiceImpl customerAuthService)
+    {
+        this.customerAuthService = customerAuthService;
+    }
     @Override
     public void init() throws ServletException {
         super.init();
@@ -26,7 +30,7 @@ public class EditProfileServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         PrintWriter out = response.getWriter();

@@ -22,6 +22,10 @@ public class CustomerLoginServlet extends HttpServlet
         this.customerAuthService = new CustomerAuthServiceImpl();
     }
 
+    public CustomerLoginServlet(CustomerAuthService customerAuthService) {
+        this.customerAuthService = customerAuthService;
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");

@@ -16,12 +16,16 @@ import java.io.PrintWriter;
 @WebServlet("/Admin/Login")
 public class AdminLoginServlet extends HttpServlet
 {
- private final AdminAuthService adminAuthService;
+ private  AdminAuthService adminAuthService;
 
  public AdminLoginServlet()
  {
      this.adminAuthService = new AdminAuthServiceImpl();
  }
+
+    public void setAdminAuthService(AdminAuthService adminAuthService) {
+        this.adminAuthService = adminAuthService;
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
